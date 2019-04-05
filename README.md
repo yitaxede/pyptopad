@@ -5,7 +5,7 @@ Pyptopad is (going to be) a simple tool for storing you text notes safe.
 
 ## Disclaimer
 No warranty, as is and all this crap. Hey, we are not cryptographers, we are just a couple of students who've got to make something for their python course.
-Bro, if you are looking for an app for organizing of transatlantic cocaine trafficking, pyptopad is probably not your best choice.
+Bro, if you are looking for an app for organizing transatlantic cocaine trafficking, pyptopad is probably not your best choice.
 
 ## Installation
 work in progress
