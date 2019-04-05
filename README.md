@@ -9,7 +9,7 @@ Write down your thoughts, love letters or shopping list, save&close -- and sleep
 ## Disclaimer
 No warranty, as is and all this crap. Hey, we are not cryptographers, we are just a couple of students who've got to make something for their python course.
 
-Bro, if you are looking for an app for organizing transatlantic cocaine trafficking, pyptopad is probably not your best choice.
+Bro, if you are looking for an app for organizing a transatlantic cocaine trafficking, pyptopad is probably not your best choice.
 
 ## Installation
 work in progress
