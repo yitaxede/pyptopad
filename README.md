@@ -21,16 +21,22 @@ work in progress
 ### Is pyptopad secure?
 See the disclaimer.
 
+### I forgot my password. Can I reset it?
+No.
+
 ### How exactly are my notes encrypted?
 work in progress
 
 ### Wow, so much crypto... But what if bad guys just guess my password?
-We are trying to make bruteforce attacks harder, but if you chose your name and date of birth as your pass, only euthanasia can help you. See [here](https://www.whonix.org/wiki/Passwords) for a guide on choosing a good password.
+We are trying to make brute-force attacks harder, but if you chose your name and date of birth as your pass, only euthanasia can help you. See [here](https://www.whonix.org/wiki/Passwords) for a guide on choosing a good password.
 
 ### How can I trust you?
 You can't.
 
 But pyptopad is Free (as in freedom) and Open-Source Software, so nothing stops you from looking through it's source code, luckily it's not gonna be huge.
+
+### Were there any independent security audits of pyptopad?
+Lol no.
 
 ### Wait, you are russkies, right? There MUST be FSB backdoors!
 Maybe, who knows.
