@@ -37,6 +37,8 @@ ciph = GOST3412Kuznechik(key)
 # the first block of plaintext, and about any common prefix shared by 
 # the two messages. 
 # For OFB and CTR, reusing an IV completely destroys security.
+
+# iv: blocksize-sized initialization vector
 iv = urandom(16 * 2)
 
 plaintext = bytearray("this is a plaintext", "utf-8")

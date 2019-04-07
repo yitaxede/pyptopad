@@ -1,12 +1,12 @@
 # PYPTOPAD (PYthon cryPTO PAD)
 ## Project description
-![Layout](pyptopad.png)
 
 Make your notes secure again!
 
 Pyptopad is (going to be) a simple tool for storing your text notes safe.
 
 Write down your thoughts, love letters or shopping list, save&close -- and sleep well, because (hopefully) nobody can read your secrets!
+![pyptopad design](pyptopad.png)
 
 ## Disclaimer
 No warranty, as is and all this crap. Hey, we are not cryptographers, we are just a couple of students who've got to make something for their python course.
