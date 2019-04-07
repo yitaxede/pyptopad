@@ -1,5 +1,7 @@
 # PYPTOPAD (PYthon cryPTO PAD)
 ## Project description
+![Layout](pyptopad.png)
+
 Make your notes secure again!
 
 Pyptopad is (going to be) a simple tool for storing your text notes safe.
@@ -43,4 +45,4 @@ Maybe, who knows.
 
 ## Developers
 * [Kirill Liolich](https://github.com/yitaxede/), group 241
-* [Ilya Babkin](FIXME), group 241
+* [Ilya Babkin](https://github.com/midmedian/), group 241
