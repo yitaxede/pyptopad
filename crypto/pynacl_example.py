@@ -18,7 +18,7 @@ scrypt        0m0.205s      0m0.894s    0m6.716s
 password = "password shared between Alice and Bob"
 message = "This is a message for Bob's eyes only"
 
-# argon2id?
+
 kdf = pwhash.argon2i.kdf
 salt = utils.random(pwhash.argon2i.SALTBYTES)
 ops = pwhash.argon2i.OPSLIMIT_INTERACTIVE

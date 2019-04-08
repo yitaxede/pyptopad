@@ -21,7 +21,7 @@ Iters       Time
 '''
 
 password = "password"
-salt = urandom(256)
+salt = urandom(32)
 
 plaintext = "A really secret message. Not for prying eyes."
 

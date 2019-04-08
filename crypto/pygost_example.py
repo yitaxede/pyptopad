@@ -24,8 +24,9 @@ Iters   Time
 
 iterations = 32
 keysize = 32
-salt = urandom(256)
-key = pbkdf2(b"password", salt, iterations, keysize)
+salt = urandom(32)
+password = "password"
+key = pbkdf2(password.encode(), salt, iterations, keysize)
 ciph = GOST3412Kuznechik(key)
 
 
@@ -39,7 +40,7 @@ ciph = GOST3412Kuznechik(key)
 # For OFB and CTR, reusing an IV completely destroys security.
 
 # iv: blocksize-sized initialization vector
-IV_SIZE = 16*16
+IV_SIZE = 32
 iv = urandom(IV_SIZE)
 
 plaintext = "this is a plaintext".encode()
