@@ -3,24 +3,23 @@ from pygost.gost3412 import GOST3412Kuznechik
 from pygost.gost34112012512 import pbkdf2
 from pygost.gost3413 import cfb_decrypt
 from pygost.gost3413 import cfb_encrypt
-from time import time
 
 # Kuznyechick cipher with CFB mode
 '''
 KDF time depending on iterations
 
 Iters   Time
-1 		0.045s
-2 		0.096s
-4 		0.198s
-8 		0.399s
-16 		0.767s
-32 		1.530s
-64 		3.065s
-128 	6.117s
-256 	12.255s
-512 	24.900s
-1024 	48.612s
+1       0.045s
+2       0.096s
+4       0.198s
+8       0.399s
+16      0.767s
+32      1.530s
+64      3.065s
+128     6.117s
+256     12.255s
+512     24.900s
+1024    48.612s
 '''
 
 iterations = 32
