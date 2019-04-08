@@ -20,10 +20,10 @@ Iters       Time
 5120000     7.675s
 '''
 
-password = b"password"
+password = "password"
 salt = urandom(16)
 
-plaintext = b"A really secret message. Not for prying eyes."
+plaintext = "A really secret message. Not for prying eyes."
 
 
 kdf = PBKDF2HMAC(
@@ -35,8 +35,8 @@ kdf = PBKDF2HMAC(
 )
 
 
-key = base64.urlsafe_b64encode(kdf.derive(password))
+key = base64.urlsafe_b64encode(kdf.derive(password.encode()))
 cipher_suite = Fernet(key)
-encrypted = cipher_suite.encrypt(plaintext)
+encrypted = cipher_suite.encrypt(plaintext.encode())
 decrypted = cipher_suite.decrypt(encrypted)
 print(decrypted)

@@ -15,8 +15,8 @@ argon2i       0m0.439s      0m2.098s    0m11.237s
 scrypt        0m0.205s      0m0.894s    0m6.716s
 '''
 
-password = b"password shared between Alice and Bob"
-message = b"This is a message for Bob's eyes only"
+password = "password shared between Alice and Bob"
+message = "This is a message for Bob's eyes only"
 
 # argon2id?
 kdf = pwhash.argon2i.kdf
@@ -30,12 +30,12 @@ mem = pwhash.argon2i.MEMLIMIT_INTERACTIVE
 # ops = pwhash.scrypt.OPSLIMIT_SENSITIVE
 # mem = pwhash.scrypt.MEMLIMIT_SENSITIVE
 
-key = kdf(secret.SecretBox.KEY_SIZE, password, salt,
+key = kdf(secret.SecretBox.KEY_SIZE, password.encode(), salt,
                  opslimit=ops, memlimit=mem)
 
 box = secret.SecretBox(key)
 
-encrypted = box.encrypt(message)
+encrypted = box.encrypt(message.encode())
 
 received = box.decrypt(encrypted)
 print(received.decode('utf-8'))
