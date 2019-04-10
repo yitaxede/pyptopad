@@ -49,9 +49,15 @@ class Cryptor:
     salts = [None for i in range(CRYPTOR_NUM)]
     cryptors = [None for i in range(CRYPTOR_NUM)]
     
-    def create(self, file_name, password, sec_mode='1'):
-        if not (sec_mode == '0' or sec_mode == '1' or sec_mode == '2'):
-            raise TypeError("'sec_mode must be a char: '0', '1' or '2'!")
+    def create(self, file_name, password, sec_mode=1):
+        if (sec_mode == '0' or sec_mode == 0):
+            self.SEC_MODE = '0'
+        elif (sec_mode == '1' or sec_mode == 1):
+            self.SEC_MODE = '1'
+        elif (sec_mode == '2' or sec_mode == 2):
+            self.SEC_MODE = '2'
+        else:
+            raise TypeError("'sec_mode must be 0, 1 or 2!")
         #create file
         self.db_file = open(file_name, "wb+")
         #write SEC_MODE
@@ -108,7 +114,7 @@ class Cryptor:
         ciphertext = plaintext.encode()
         for i in range(self.CRYPTOR_NUM):
             ciphertext = self.cryptors[i].encrypt(ciphertext)
-            
+        
         #write encrypted
         self.db_file.write(ciphertext)
         
@@ -157,9 +163,9 @@ class Cryptor:
         
         keys = [long_key[self.KEY_SIZE * i : self.KEY_SIZE * (i+1)] for i in range(self.CRYPTOR_NUM)]
         
-        self.cryptors[0] = secret.SecretBox(keys[0])
+        self.cryptors[0] = Fernet(base64.urlsafe_b64encode(keys[2]))
         self.cryptors[1] = GOST_Cryptor(keys[1])
-        self.cryptors[2] = Fernet(base64.urlsafe_b64encode(keys[2]))
+        self.cryptors[2] = secret.SecretBox(keys[0])
         
         self.CRYPTORS_INITED = 1
         
