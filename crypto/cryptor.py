@@ -44,12 +44,12 @@ class Cryptor:
     SALT_SIZE = 32 #bytes
     KEY_SIZE = 32
     CRYPTOR_NUM = 3
-    CRYPTORS_INITED = 0
     
     salts = [None for i in range(CRYPTOR_NUM)]
     cryptors = [None for i in range(CRYPTOR_NUM)]
     
     def create(self, file_name, password, sec_mode=1):
+        
         if (sec_mode == '0' or sec_mode == 0):
             self.SEC_MODE = '0'
         elif (sec_mode == '1' or sec_mode == 1):
@@ -58,12 +58,11 @@ class Cryptor:
             self.SEC_MODE = '2'
         else:
             raise TypeError("'sec_mode must be 0, 1 or 2!")
+            
         #create file
         self.db_file = open(file_name, "wb+")
         #write SEC_MODE
-        self.SEC_MODE = sec_mode
         self.db_file.write(self.SEC_MODE.encode())
-        
         
         #generate and write salts
         for i in range(self.CRYPTOR_NUM):
@@ -71,8 +70,6 @@ class Cryptor:
             self.db_file.write(self.salts[i])
             
         self.init_cryptors(password.encode())
-            
-            
         
     def open(self, file_name):
         self.db_file = open(file_name, "rb+")
@@ -93,6 +90,9 @@ class Cryptor:
         #self.password = password.encode()
         ciphertext = self.db_file.read()
         #del self.password
+        
+        if len(ciphertext) == 0:
+            return ""
         
         #init cryptors
         self.init_cryptors(password.encode())
@@ -119,8 +119,8 @@ class Cryptor:
         self.db_file.write(ciphertext)
         
     def init_cryptors(self, password):
-        if self.CRYPTORS_INITED:
-            raise Exception("Cryptors are already inited!")
+        if not isinstance(password, bytes):
+            password = password.encode()
         
         kdfs = [None for i in range(self.CRYPTOR_NUM)]
         KEYS_SIZE = self.KEY_SIZE * self.CRYPTOR_NUM
@@ -167,5 +167,4 @@ class Cryptor:
         self.cryptors[1] = GOST_Cryptor(keys[1])
         self.cryptors[2] = secret.SecretBox(keys[0])
         
-        self.CRYPTORS_INITED = 1
         
