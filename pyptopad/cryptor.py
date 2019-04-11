@@ -46,10 +46,13 @@ class Cryptor:
     KEY_SIZE = 32
     CRYPTOR_NUM = 3
     
-    salts = [None for i in range(CRYPTOR_NUM)]
-    cryptors = [None for i in range(CRYPTOR_NUM)]
+    def __init__(self):
+        self.salts = [None for i in range(CRYPTOR_NUM)]
+        self.cryptors = [None for i in range(CRYPTOR_NUM)]
     
     def create(self, file_name, password, sec_mode=1):
+        self.salts = [None for i in range(CRYPTOR_NUM)]
+        self.cryptors = [None for i in range(CRYPTOR_NUM)]
         
         if (sec_mode == '0' or sec_mode == 0):
             self.SEC_MODE = '0'
