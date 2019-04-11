@@ -26,6 +26,7 @@ class GOST_Cryptor:
         return cfb_decrypt(self.ciph.encrypt, 16, ciphertext[self.IV_SIZE:], ciphertext[:self.IV_SIZE])
 
 #SEC_MODE must be CHAR '0', '1' or '2'
+#              or INT 0, 1 or 2
 class Cryptor:
     '''
     USAGE:
