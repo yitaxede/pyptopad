@@ -4,7 +4,7 @@ import xml.etree.ElementTree as ET
 
 #Database format example
 
-db_string = '''
+'''
 <database>
     <note name='love letter to Jane'>
         <text color='red'>Dear Jane, </text>
@@ -37,10 +37,10 @@ Usage:
 '''
 
 class Database:
-    Notes = []
-    attributes = {}
-    
     def __init__(self, xml_string=None):
+        self.Notes = []
+        self.attributes = {}
+        
         if xml_string == None:
             return self
             
@@ -60,13 +60,13 @@ class Database:
 
     
 class Note:
-    Texts = []
-    attributes = {}
-    
     def __init__(self, xml=None):
+        self.Texts = []
+        self.attributes = {}
+    
         if xml == None:
             return self
-            
+        
         self.attributes = xml.attrib.copy()
             
         for txt in xml:
@@ -81,10 +81,10 @@ class Note:
         
         
 class Text:
-    content = ''
-    attributes = {}
-    
     def __init__(self, xml=None):
+        self.content = {}
+        self.attributes = {}
+        
         if xml == None:
             return self
             
