@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import base64
 from os import urandom
+from time import time
 
 from nacl import pwhash, secret, utils
 
@@ -47,12 +48,12 @@ class Cryptor:
     CRYPTOR_NUM = 3
     
     def __init__(self):
-        self.salts = [None for i in range(CRYPTOR_NUM)]
-        self.cryptors = [None for i in range(CRYPTOR_NUM)]
+        self.salts = [None for i in range(self.CRYPTOR_NUM)]
+        self.cryptors = [None for i in range(self.CRYPTOR_NUM)]
     
     def create(self, file_name, password, sec_mode=1):
-        self.salts = [None for i in range(CRYPTOR_NUM)]
-        self.cryptors = [None for i in range(CRYPTOR_NUM)]
+        self.salts = [None for i in range(self.CRYPTOR_NUM)]
+        self.cryptors = [None for i in range(self.CRYPTOR_NUM)]
         
         if (sec_mode == '0' or sec_mode == 0):
             self.SEC_MODE = '0'
@@ -171,4 +172,22 @@ class Cryptor:
         self.cryptors[1] = GOST_Cryptor(keys[1])
         self.cryptors[2] = secret.SecretBox(keys[0])
         
-        
+#takes sec_mode (STR '0', '1', '2' or INT 0, 1, 2)
+#returns time in seconds for key initialization
+def benchmark(sec_mode):
+    c = Cryptor()
+    
+    if (sec_mode == '0' or sec_mode == 0):
+        c.SEC_MODE = '0'
+    elif (sec_mode == '1' or sec_mode == 1):
+        c.SEC_MODE = '1'
+    elif (sec_mode == '2' or sec_mode == 2):
+        c.SEC_MODE = '2'
+    else:
+        raise TypeError("'sec_mode must be 0, 1 or 2!")
+    
+    c.salts = [bytes(str(i)*c.SALT_SIZE, "utf-8") for i in range(c.CRYPTOR_NUM)]
+
+    t = time()
+    c.init_cryptors(b'weak_password')
+    return time() - t
