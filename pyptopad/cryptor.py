@@ -164,9 +164,7 @@ class Cryptor:
         
         long_key = password
         for i in range(self.CRYPTOR_NUM):
-            t = time()
             long_key = kdfs[i](long_key)
-            print(time() - t)
         
         keys = [long_key[self.KEY_SIZE * i : self.KEY_SIZE * (i+1)] for i in range(self.CRYPTOR_NUM)]
         
@@ -193,9 +191,6 @@ def benchmark(sec_mode):
     t = time()
     c.init_cryptors(b'weak_password')
     return time() - t
-    
-for i in range(3):
-    print('sec_mode', i, ': ', benchmark(i))
     
 '''
     Benchmark result 1 (old laptop):
