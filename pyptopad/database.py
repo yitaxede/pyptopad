@@ -3,7 +3,6 @@ import xml.etree.ElementTree as ET
 
 
 #Database format example
-
 '''
 <database>
     <note name='love letter to Jane'>
