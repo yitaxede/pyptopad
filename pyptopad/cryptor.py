@@ -133,18 +133,18 @@ class Cryptor:
         if self.SEC_MODE == '0':
             nacl_ops = pwhash.argon2i.OPSLIMIT_INTERACTIVE
             nacl_mem = pwhash.argon2i.MEMLIMIT_INTERACTIVE
-            gost_iters = 8
-            crypt_iters = 150000
+            gost_iters = 4
+            crypt_iters = 60000
         elif self.SEC_MODE == '1':
             nacl_ops = pwhash.argon2i.OPSLIMIT_MODERATE
             nacl_mem = pwhash.argon2i.MEMLIMIT_MODERATE
-            gost_iters = 32
-            crypt_iters = 250000
+            gost_iters = 24
+            crypt_iters = 500000
         elif self.SEC_MODE == '2':
             nacl_ops = pwhash.argon2i.OPSLIMIT_SENSITIVE
             nacl_mem = pwhash.argon2i.MEMLIMIT_SENSITIVE
-            gost_iters = 128
-            crypt_iters = 500000
+            gost_iters = 111
+            crypt_iters = 2500000
         else:
             raise TypeError("Wrong SEC_MODE!")
         
@@ -164,7 +164,9 @@ class Cryptor:
         
         long_key = password
         for i in range(self.CRYPTOR_NUM):
+            t = time()
             long_key = kdfs[i](long_key)
+            print(time() - t)
         
         keys = [long_key[self.KEY_SIZE * i : self.KEY_SIZE * (i+1)] for i in range(self.CRYPTOR_NUM)]
         
@@ -191,3 +193,24 @@ def benchmark(sec_mode):
     t = time()
     c.init_cryptors(b'weak_password')
     return time() - t
+    
+for i in range(3):
+    print('sec_mode', i, ': ', benchmark(i))
+    
+'''
+    Benchmark result 1:
+0.33399415016174316
+0.3794994354248047
+0.4099159240722656
+sec_mode 0 :  1.1285181045532227
+1.9901113510131836
+2.2889082431793213
+2.186595916748047
+sec_mode 1 :  6.470615386962891
+10.72014307975769
+10.585609197616577
+10.949737310409546
+sec_mode 2 :  32.26047968864441
+
+
+'''
