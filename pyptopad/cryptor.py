@@ -96,10 +96,6 @@ class Cryptor:
         ciphertext = self.db_file.read()
         #del self.password
         
-        if len(ciphertext) == 0:
-            return ""
-        
-        #init cryptors
         self.init_cryptors(password.encode())
         
         #try to decrypt

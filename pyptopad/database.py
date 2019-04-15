@@ -41,7 +41,7 @@ class Database:
         self.attributes = {}
         
         if xml_string == None:
-            return self
+            return
             
         db = ET.fromstring(xml_string)
         self.attributes = db.attrib.copy()
@@ -64,7 +64,7 @@ class Note:
         self.attributes = {}
     
         if xml == None:
-            return self
+            return
         
         self.attributes = xml.attrib.copy()
             
@@ -85,7 +85,7 @@ class Text:
         self.attributes = {}
         
         if xml == None:
-            return self
+            return
             
         self.attributes = xml.attrib.copy()
         self.content = xml.text
