@@ -131,21 +131,21 @@ class CreatePpdbFrame(tk.Frame):
         if mode == '0':
             self.lblSecMode["fg"] = "green"
             self.secModeStr.set("Nothing to Hide")
-            self.secModeDescr.set("Description of\nNothing to Hide SM")
+            self.secModeDescr.set("I put perfomance above security.\nIn this mode decryption will be quickest,\nbut you better use a strong password.")
         elif mode == '1':
             self.lblSecMode["fg"] = "dark goldenrod"
             self.secModeStr.set("Standard")
-            self.secModeDescr.set("Description of\nStandard SM")
+            self.secModeDescr.set("Decrypion will take a little bit longer in this mode,\nwhich makes brute-force attacks harder.")
         elif mode == '2':
             self.lblSecMode["fg"] = "red"
             self.secModeStr.set("Paranoia")
-            self.secModeDescr.set("Description of\nParanoia SM")
+            self.secModeDescr.set("Just because you're paranoid,\ndoesn't mean they're not watching you.")
 
     def refreshBench(self):
         self.benchTxt.set("On this device decryption is going to take:\n" +
-                          self.benchResult[0].get() + " s with Nothing to Hide Security Mode\n" +
-                          self.benchResult[1].get() + " s with Standard Security Mode\n" +
-                          self.benchResult[2].get() + " s with Paranoia Security Mode")
+                          self.benchResult[0].get() + "s with Nothing to Hide Security Mode\n" +
+                          self.benchResult[1].get() + "s with Standard Security Mode\n" +
+                          self.benchResult[2].get() + "s with Paranoia Security Mode")
 
     def changeState(self, state):
         self.entPpdb["state"] = state
