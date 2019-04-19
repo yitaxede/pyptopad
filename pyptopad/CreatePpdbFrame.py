@@ -26,8 +26,8 @@ class CreatePpdbFrame(tk.Frame):
                           sticky=tk.W+tk.E+tk.S+tk.N)
 
         self.btnPpdb = tk.Button(self, text="...", font=FONT,
-                            command=self.btnPpdbClicked,
-                            anchor=tk.E)
+                                 command=self.btnPpdbClicked,
+                                 anchor=tk.E)
         self.btnPpdb.grid(row=1, column=3, sticky=tk.E)
 
         lblPass = tk.Label(self, text="Password:", font=FONT,
@@ -41,21 +41,20 @@ class CreatePpdbFrame(tk.Frame):
                            sticky=tk.W+tk.E+tk.S+tk.N)
 
         lblPass = tk.Label(self, text="Repeat Password:", font=FONT,
-                                anchor=tk.W)
+                           anchor=tk.W)
         lblPass.grid(row=4, column=0, sticky=tk.W+tk.E)
 
         self.userPass2 = tk.StringVar()
         self.entPass2 = tk.Entry(self, font=FONT, show='*',
-                                textvariable=self.userPass2, width=3)
+                                 textvariable=self.userPass2, width=3)
         self.entPass2.bind("<Return>", self.btnCreateClicked)
         self.entPass2.grid(row=5, column=0, columnspan=4, sticky=tk.W+tk.E+tk.S+tk.N)
 
-        # change all the shit
         self.secMode = tk.IntVar()
         self.sclSec = tk.Scale(self, font=FONT, orient=tk.HORIZONTAL,
-                          showvalue=0,
-                          variable=self.secMode, to=2,
-                          command=self.changeSecMode)
+                               showvalue=0,
+                               variable=self.secMode, to=2,
+                               command=self.changeSecMode)
         self.sclSec.grid(row=7, column=0, columnspan=4, sticky=tk.W+tk.E+tk.S+tk.N)
 
         self.secModeStr = tk.StringVar()
@@ -70,8 +69,6 @@ class CreatePpdbFrame(tk.Frame):
         lblSecModeDescr.grid(row=9, column=0, columnspan=4,
                              sticky=tk.W)
 
-        #benchFrame = tk.Frame(self, bd=3, bg="grey")
-
         self.benchResult = [tk.StringVar(), tk.StringVar(), tk.StringVar()]
         self.benchResult[0].set("...")
         self.benchResult[1].set("...")
@@ -83,10 +80,6 @@ class CreatePpdbFrame(tk.Frame):
         lblBench = tk.Label(self, font=SFONT, textvariable=self.benchTxt,
                             anchor=tk.W, justify=tk.LEFT, bd=4, relief="groove")
         lblBench.grid(row=10, column=0, columnspan=4, sticky=tk.W+tk.E)
-
-        #benchFrame.grid(row=10, column=0, columnspan=4,
-        #                sticky=tk.W+tk.E+tk.S+tk.N)
-
 
         self.btnCancel = tk.Button(self, text="Cancel", font=FONT,
                               command=self.closeWindow,
@@ -121,9 +114,7 @@ class CreatePpdbFrame(tk.Frame):
         if self.userPass1.get() != self.userPass2.get():
             tk.messagebox.showerror("", "Passwords don't match.")
             return
-        #self.entPass1['state'] = "disabled"
         c = cr.Cryptor()
-        #print(self.ppdbPath.get(), self.userPass1.get(), self.secMode.get())
         self.changeState("disabled")
         try:
             c.create(self.ppdbPath.get(), self.userPass1.get(), self.secMode.get())
@@ -137,7 +128,6 @@ class CreatePpdbFrame(tk.Frame):
         self.closeWindow()
 
     def changeSecMode(self, mode):
-        # independent function
         if mode == '0':
             self.lblSecMode["fg"] = "green"
             self.secModeStr.set("Nothing to Hide")

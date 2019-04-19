@@ -78,6 +78,10 @@ class LoginFrame(tk.Frame):
         except exceptions.CryptoError:
             tk.messagebox.showerror("", "Wrong password.")
             self.changeState("normal")
+        except Exception as exc:
+            print(exc)
+            tk.messagebox.showerror("", "Unexpected error. Check console.")
+            self.changeState("normal")
         '''except Exception as exc:
             print(exc)
             print("Wrong password.")'''
