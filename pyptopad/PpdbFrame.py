@@ -8,14 +8,14 @@ import database as db
 FONT = ("DejaVu Sans Mono Bold", 12)
 
 class PpdbFrame(tk.Frame):
-    def __init__(self, master, file=None, xmldb=None, crypt=None):
+    def __init__(self, master, file, ddb, crypt):
         tk.Frame.__init__(self, master)
         self.master = master
 
         self.file = file
         self.crypt = crypt
 
-        self.d = db.Database(xmldb)
+        self.ddb = ddb
 
         self.lbNotes = tk.Listbox(self, font=FONT)
         self.refreshNotes()
@@ -25,7 +25,7 @@ class PpdbFrame(tk.Frame):
                           )
 
         self.txtText = tk.Text(self, font=FONT)
-        #self.txtText.insert(tk.INSERT, self.d.Notes[0])
+        self.txtText.insert(tk.INSERT, self.ddb.to_xml_string())
         self.txtText.grid(row=0, column=3, rowspan=2,
                           sticky=tk.E+tk.W+tk.S+tk.N)
 
@@ -44,7 +44,7 @@ class PpdbFrame(tk.Frame):
         self.master.title(file.split('/')[-1] + " - pyptopad")
 
     def btnSaveClicked(self):
-        self.crypt.write(self.d.to_xml_string())
+        self.crypt.write(self.ddb.to_xml_string())
         pass
 
     def btnAddClicked(self):
@@ -63,21 +63,23 @@ class PpdbFrame(tk.Frame):
         '''
 
     def rUSure(self, *args):
-        self.crypt.close()
         msgbox = tk.messagebox.askquestion("Exit application", 
                                            "Are you sure you want to exit the application?")
         if msgbox == "yes":
-            self.master.setFrame(lf.LoginFrame(self.master))
+            self.crypt.close()
+            self.master.destroy()
+            #self.master.setFrame(lf.LoginFrame(self.master))
 
     def refreshNotes(self):
-        if not self.d.Notes:
-            for x in self.d.Notes:
+        self.lbNotes.delete(0, tk.END)
+        if self.ddb.Notes:
+            for x in self.ddb.Notes:
                 self.lbNotes.insert(tk.END, x.attributes["name"])
 
     def checkAdd(self):
         if self.text.get():
-            self.d.Notes.append(db.Note(ET.fromstring("<note name='" + self.text.get() + "'></note>")))
-            self.lbNotes.insert(tk.END, self.d.Notes[-1].attributes["name"])
+            self.ddb.Notes.append(db.Note(ET.fromstring("<note name='" + self.text.get() + "'></note>")))
+            self.refreshNotes()
 
     def changeNote(self, *args):
         self.txtText.delete('1.0', tk.END)

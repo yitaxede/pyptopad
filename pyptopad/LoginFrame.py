@@ -7,7 +7,8 @@ import CreatePpdbFrame as cpf
 
 from nacl import exceptions
 
-from cryptor import Cryptor
+import cryptor as cr
+import database as db
 
 FONT = ("DejaVu Sans Mono Bold", 12)
 
@@ -23,7 +24,9 @@ class LoginFrame(tk.Frame):
         self.ppdbPath = tk.StringVar()
         self.entPpdb = tk.Entry(self, textvariable=self.ppdbPath,
                                 font=FONT, width=30)
+        self.entPpdb.bind("<Return>", self.btnOpenClicked)
         self.entPpdb.grid(row=1, column=0, sticky=tk.W+tk.E+tk.S+tk.N)
+        self.entPpdb.focus_set()
 
         self.btnPpdb = tk.Button(self, text="...", font=FONT,
                                  command=self.btnPpdbClicked,
@@ -63,18 +66,18 @@ class LoginFrame(tk.Frame):
             self.ppdbPath.set(file)
 
     def btnOpenClicked(self, *args):
-        c = Cryptor()
+        c = cr.Cryptor()
         c.open(self.ppdbPath.get())
         self.changeState("disabled")
         try:
+            d = db.Database(c.read(self.userPass.get()))
             self.master.setFrame(pf.PpdbFrame(self.master,
-                                           file=self.ppdbPath.get(),
-                                           xmldb=c.read(self.userPass.get()),
-                                            crypt=c))
+                                              file=self.ppdbPath.get(),
+                                              ddb=d,
+                                              crypt=c))
         except exceptions.CryptoError:
             tk.messagebox.showerror("", "Wrong password.")
             self.changeState("normal")
-        self.changeState("normal")
         '''except Exception as exc:
             print(exc)
             print("Wrong password.")'''
