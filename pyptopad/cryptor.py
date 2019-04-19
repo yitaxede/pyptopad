@@ -111,8 +111,9 @@ class Cryptor:
         self.db_file.seek(1 + self.SALT_SIZE * self.CRYPTOR_NUM)
         self.db_file.truncate()
         
-        #encrypt
-        ciphertext = plaintext.encode()
+        if isinstance(plaintext, str):
+            plaintext = plaintext.encode()
+        ciphertext = plaintext
         for i in range(self.CRYPTOR_NUM):
             ciphertext = self.cryptors[i].encrypt(ciphertext)
         
