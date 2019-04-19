@@ -35,7 +35,7 @@ class PpdbFrame(tk.Frame):
         self.txtText.grid(row=0, column=3, rowspan=2,
                           sticky=tk.E+tk.W+tk.S+tk.N)
 
-        btnClose = tk.Button(self, text="Save", font=FONT,
+        btnClose = tk.Button(self, text="Close", font=FONT,
                             command=self.btnCloseClicked,
                             anchor=tk.W)
         btnClose.grid(row=1, column=0)
@@ -67,10 +67,12 @@ class PpdbFrame(tk.Frame):
         self.text = tk.StringVar()
         entry = tk.Entry(self.window, textvariable=self.text,
                          font=FONT)
-        entry.pack()
+        entry.bind("<Return>", self.checkAdd)
+        entry.grid(row=0)
+        entry.focus_set()
         butt = tk.Button(self.window, text="Add", font=FONT,
-                         command=self.checkAdd)
-        butt.pack()
+                         command=self.checkAdd, anchor=tk.E)
+        butt.grid(row=1)
 
     def btnCloseClicked(self):
         msgbox = tk.messagebox.askquestion("Return to login", 
@@ -92,7 +94,7 @@ class PpdbFrame(tk.Frame):
             for x in self.ddb.Notes:
                 self.lbNotes.insert(tk.END, x.attributes["name"])
 
-    def checkAdd(self):
+    def checkAdd(self, *args):
         if self.text.get():
             self.ddb.Notes.append(db.Note(ET.fromstring("<note name='" + self.text.get() + "'></note>")))
             self.ddb.Notes[-1].Texts.append(db.Text())
