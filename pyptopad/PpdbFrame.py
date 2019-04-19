@@ -35,10 +35,15 @@ class PpdbFrame(tk.Frame):
         self.txtText.grid(row=0, column=3, rowspan=2,
                           sticky=tk.E+tk.W+tk.S+tk.N)
 
+        btnClose = tk.Button(self, text="Save", font=FONT,
+                            command=self.btnCloseClicked,
+                            anchor=tk.W)
+        btnClose.grid(row=1, column=0)
+
         btnSave = tk.Button(self, text="Save", font=FONT,
                             command=self.btnSaveClicked,
-                            anchor=tk.W)
-        btnSave.grid(row=1, column=0, columnspan=2)
+                            anchor=tk.E)
+        btnSave.grid(row=1, column=1)
 
         btnAdd = tk.Button(self, text="+", font=FONT,
                            command=self.btnAddClicked,
@@ -66,6 +71,13 @@ class PpdbFrame(tk.Frame):
         butt = tk.Button(self.window, text="Add", font=FONT,
                          command=self.checkAdd)
         butt.pack()
+
+    def btnCloseClicked(self):
+        msgbox = tk.messagebox.askquestion("Return to login", 
+                                           "Are you sure you want to return")
+        if msgbox == "yes":
+            self.crypt.close()
+            self.master.setFrame(lf.LoginFrame(self.master))
 
     def rUSure(self, *args):
         msgbox = tk.messagebox.askquestion("Exit application", 
