@@ -25,10 +25,10 @@ class LoginFrame(tk.Frame):
                                 font=FONT, width=30)
         self.entPpdb.grid(row=1, column=0, sticky=tk.W+tk.E+tk.S+tk.N)
 
-        btnPpdb = tk.Button(self, text="...", font=FONT,
+        self.btnPpdb = tk.Button(self, text="...", font=FONT,
                                  command=self.btnPpdbClicked,
                                  anchor=tk.E)
-        btnPpdb.grid(row=1, column=1, sticky=tk.E, ipadx=1)
+        self.btnPpdb.grid(row=1, column=1, sticky=tk.E, ipadx=1)
 
         lblPass = tk.Label(self, text="Password:", font=FONT,
                                 anchor=tk.W)
@@ -40,14 +40,14 @@ class LoginFrame(tk.Frame):
         self.entPass.bind("<Return>", self.btnOpenClicked)
         self.entPass.grid(row=3, column=0, sticky=tk.W+tk.E+tk.S+tk.N)
 
-        btnOpen = tk.Button(self, text="Open", font=FONT,
+        self.btnOpen = tk.Button(self, text="Open", font=FONT,
                                  command=self.btnOpenClicked,
                                  anchor=tk.E)
-        btnOpen.grid(row=3, column=1, sticky=tk.E)
+        self.btnOpen.grid(row=3, column=1, sticky=tk.E)
 
-        btnNew = tk.Button(self, text="New database", font=FONT,
+        self.btnNew = tk.Button(self, text="New database", font=FONT,
                            command=self.btnNewClicked)
-        btnNew.grid(row=4, column=0, columnspan=2, sticky=tk.W+tk.S, pady=20)
+        self.btnNew.grid(row=4, column=0, columnspan=2, sticky=tk.W+tk.S, pady=20)
 
         self.rowconfigure(1, weight=1)
         self.columnconfigure(0, weight=1)
@@ -65,6 +65,7 @@ class LoginFrame(tk.Frame):
     def btnOpenClicked(self, *args):
         c = Cryptor()
         c.open(self.ppdbPath.get())
+        self.changeState("disabled")
         try:
             self.master.setFrame(pf.PpdbFrame(self.master,
                                            file=self.ppdbPath.get(),
@@ -72,6 +73,8 @@ class LoginFrame(tk.Frame):
                                             crypt=c))
         except exceptions.CryptoError:
             tk.messagebox.showerror("", "Wrong password.")
+            self.changeState("normal")
+        self.changeState("normal")
         '''except Exception as exc:
             print(exc)
             print("Wrong password.")'''
@@ -80,6 +83,14 @@ class LoginFrame(tk.Frame):
             self.master.setFrame(PpdbFrame(self.master))
         else:
             tk.messagebox.showerror("WRONG PASSWORD", "Are you kidding me?")'''
+
+    def changeState(self, state):
+        self.entPpdb["state"] = state
+        self.btnPpdb["state"] = state
+        self.entPass["state"] = state
+        self.btnOpen["state"] = state
+        self.btnNew["state"] = state
+        self.master.update_idletasks()
 
     def btnNewClicked(self):
         self.master.setFrame(cpf.CreatePpdbFrame(self.master))

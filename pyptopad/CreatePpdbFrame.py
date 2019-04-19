@@ -25,10 +25,10 @@ class CreatePpdbFrame(tk.Frame):
         self.entPpdb.grid(row=1, column=0, columnspan=3,
                           sticky=tk.W+tk.E+tk.S+tk.N)
 
-        btnPpdb = tk.Button(self, text="...", font=FONT,
+        self.btnPpdb = tk.Button(self, text="...", font=FONT,
                             command=self.btnPpdbClicked,
                             anchor=tk.E)
-        btnPpdb.grid(row=1, column=3, sticky=tk.E)
+        self.btnPpdb.grid(row=1, column=3, sticky=tk.E)
 
         lblPass = tk.Label(self, text="Password:", font=FONT,
                            anchor=tk.W)
@@ -52,11 +52,11 @@ class CreatePpdbFrame(tk.Frame):
 
         # change all the shit
         self.secMode = tk.IntVar()
-        sclSec = tk.Scale(self, font=FONT, orient=tk.HORIZONTAL,
+        self.sclSec = tk.Scale(self, font=FONT, orient=tk.HORIZONTAL,
                           showvalue=0,
                           variable=self.secMode, to=2,
                           command=self.changeSecMode)
-        sclSec.grid(row=7, column=0, columnspan=4, sticky=tk.W+tk.E+tk.S+tk.N)
+        self.sclSec.grid(row=7, column=0, columnspan=4, sticky=tk.W+tk.E+tk.S+tk.N)
 
         self.secModeStr = tk.StringVar()
         self.lblSecMode = tk.Label(self, font=FONT, textvariable=self.secModeStr,
@@ -88,20 +88,20 @@ class CreatePpdbFrame(tk.Frame):
         #                sticky=tk.W+tk.E+tk.S+tk.N)
 
 
-        btnCancel = tk.Button(self, text="Cancel", font=FONT,
+        self.btnCancel = tk.Button(self, text="Cancel", font=FONT,
                               command=self.closeWindow,
                               anchor=tk.W)
-        btnCancel.grid(row=11, column=0, sticky=tk.W)
+        self.btnCancel.grid(row=11, column=0, sticky=tk.W)
 
-        btnBench = tk.Button(self, text="Benchmark", font=FONT,
+        self.btnBench = tk.Button(self, text="Benchmark", font=FONT,
                              command=self.benchmark,
                              anchor=tk.E)
-        btnBench.grid(row=11, column=2, sticky=tk.E)
+        self.btnBench.grid(row=11, column=2, sticky=tk.E)
 
-        btnCreate = tk.Button(self, text="Create", font=FONT,
+        self.btnCreate = tk.Button(self, text="Create", font=FONT,
                               command=self.btnCreateClicked,
                               anchor=tk.E)
-        btnCreate.grid(row=11, column=3, sticky=tk.E)
+        self.btnCreate.grid(row=11, column=3, sticky=tk.E)
 
 
         self.changeSecMode("0")
@@ -124,11 +124,12 @@ class CreatePpdbFrame(tk.Frame):
         #self.entPass1['state'] = "disabled"
         c = cr.Cryptor()
         #print(self.ppdbPath.get(), self.userPass1.get(), self.secMode.get())
+        self.changeState("disabled")
         try:
             c.create(self.ppdbPath.get(), self.userPass1.get(), self.secMode.get())
         except Exception:
             tk.messagebox.showerror("", "Wrong file path.")
-            self.entPass1["state"] = "normal"
+            self.changeState("normal")
             return
         d = db.Database()
         c.write(d.to_xml_string())
@@ -156,7 +157,19 @@ class CreatePpdbFrame(tk.Frame):
                           self.benchResult[1].get() + " s with Standard Security Mode\n" +
                           self.benchResult[2].get() + " s with Paranoia Security Mode")
 
+    def changeState(self, state):
+        self.entPpdb["state"] = state
+        self.btnPpdb["state"] = state
+        self.entPass1["state"] = state
+        self.entPass2["state"] = state
+        self.btnCancel["state"] = state
+        self.btnBench["state"] = state
+        self.btnCreate["state"] = state
+        self.sclSec["state"] = state
+        self.master.update_idletasks()
+
     def benchmark(self, *args):
+        self.changeState("disabled")
         self.benchResult[0].set(str(round(cr.benchmark(0), 2)))
         self.refreshBench()
         self.master.update_idletasks()
@@ -165,6 +178,7 @@ class CreatePpdbFrame(tk.Frame):
         self.master.update_idletasks()
         self.benchResult[2].set(str(round(cr.benchmark(2), 2)))
         self.refreshBench()
+        self.changeState("normal")
 
     def closeWindow(self):
         self.master.setFrame(lf.LoginFrame(self.master))

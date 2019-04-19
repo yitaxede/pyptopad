@@ -18,15 +18,14 @@ class PpdbFrame(tk.Frame):
         self.d = db.Database(xmldb)
 
         self.lbNotes = tk.Listbox(self, font=FONT)
-        for x in self.d.Notes:
-            self.lbNotes.insert(tk.END, x.attributes["name"])
+        self.refreshNotes()
         self.lbNotes.bind('<<ListboxSelect>>', self.changeNote)
         self.lbNotes.grid(row=0, column=0, columnspan=3,
                           sticky=tk.E+tk.W+tk.S+tk.N,
                           )
 
         self.txtText = tk.Text(self, font=FONT)
-        self.txtText.insert(tk.INSERT, self.d.Notes[0])
+        #self.txtText.insert(tk.INSERT, self.d.Notes[0])
         self.txtText.grid(row=0, column=3, rowspan=2,
                           sticky=tk.E+tk.W+tk.S+tk.N)
 
@@ -69,6 +68,11 @@ class PpdbFrame(tk.Frame):
                                            "Are you sure you want to exit the application?")
         if msgbox == "yes":
             self.master.setFrame(lf.LoginFrame(self.master))
+
+    def refreshNotes(self):
+        if not self.d.Notes:
+            for x in self.d.Notes:
+                self.lbNotes.insert(tk.END, x.attributes["name"])
 
     def checkAdd(self):
         if self.text.get():
