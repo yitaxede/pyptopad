@@ -16,28 +16,34 @@ class PpdbFrame(tk.Frame):
         self.ddb = ddb
         self.curr = 0
 
-        scroll = tk.Scrollbar(self)
-        scroll.grid(row=0, column=0, sticky=tk.N+tk.S)
+        frame = tk.Frame(self)
 
-        self.lbNotes = tk.Listbox(self, font=FONT, yscrollcommand=scroll)
+        scroll = tk.Scrollbar(frame)
+        scroll.pack(side="right", fill="y")
+
+        self.lbNotes = tk.Listbox(frame, font=FONT, yscrollcommand=scroll.set)
         self.refreshNotes()
         self.lbNotes.bind('<<ListboxSelect>>', self.changeNote)
-        self.lbNotes.grid(row=0, column=1, columnspan=3,
-                          sticky=tk.E+tk.W+tk.S+tk.N)
+        self.lbNotes.pack(side="left", fill="y")
+
+        scroll["command"] = self.lbNotes.yview
+
+        frame.grid(row=0, column=0, columnspan=3,
+                   sticky=tk.E+tk.W+tk.S+tk.N)
 
         self.txtText = tk.Text(self, font=FONT)
-        self.txtText.grid(row=0, column=4, rowspan=2,
+        self.txtText.grid(row=0, column=3, rowspan=2,
                           sticky=tk.E+tk.W+tk.S+tk.N)
 
         btnSave = tk.Button(self, text="Save", font=FONT,
                             command=self.btnSaveClicked,
                             anchor=tk.W)
-        btnSave.grid(row=1, column=1, columnspan=2)
+        btnSave.grid(row=1, column=0, columnspan=2)
 
         btnAdd = tk.Button(self, text="+", font=FONT,
                            command=self.btnAddClicked,
                            anchor=tk.E)
-        btnAdd.grid(row=1, column=3)
+        btnAdd.grid(row=1, column=2)
         
         self.lbNotes.select_set(0)
         if self.ddb.Notes:
