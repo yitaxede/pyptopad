@@ -7,6 +7,7 @@ import cryptor as cr
 import database as db
 
 FONT = ("DejaVu Sans Mono Bold", 12)
+SFONT = (FONT[0], FONT[1] - 2)
 
 class CreatePpdbFrame(tk.Frame):
     def __init__(self, master):
@@ -64,10 +65,10 @@ class CreatePpdbFrame(tk.Frame):
                              sticky=tk.W)
 
         self.secModeDescr = tk.StringVar()
-        lblSecModeDescr = tk.Label(self, font=FONT, textvariable=self.secModeDescr,
-                                   anchor=tk.W)
+        lblSecModeDescr = tk.Label(self, font=SFONT, textvariable=self.secModeDescr,
+                                   anchor=tk.W, justify=tk.LEFT)
         lblSecModeDescr.grid(row=9, column=0, columnspan=4,
-                             )
+                             sticky=tk.W)
 
         #benchFrame = tk.Frame(self, bd=3, bg="grey")
 
@@ -79,7 +80,7 @@ class CreatePpdbFrame(tk.Frame):
         self.benchTxt = tk.StringVar()
         self.refreshBench()
 
-        lblBench = tk.Label(self, font=(FONT[0], FONT[1] - 2), textvariable=self.benchTxt,
+        lblBench = tk.Label(self, font=SFONT, textvariable=self.benchTxt,
                             anchor=tk.W, justify=tk.LEFT, bd=4, relief="groove")
         lblBench.grid(row=10, column=0, columnspan=4, sticky=tk.W+tk.E)
 
@@ -139,15 +140,15 @@ class CreatePpdbFrame(tk.Frame):
         if mode == '0':
             self.lblSecMode["fg"] = "green"
             self.secModeStr.set("Nothing to Hide")
-            self.secModeDescr.set("")
+            self.secModeDescr.set("Description of\nNothing to Hide SM")
         elif mode == '1':
             self.lblSecMode["fg"] = "dark goldenrod"
             self.secModeStr.set("Standard")
-            self.secModeDescr.set("")
+            self.secModeDescr.set("Description of\nStandard SM")
         elif mode == '2':
             self.lblSecMode["fg"] = "red"
             self.secModeStr.set("Paranoia")
-            self.secModeDescr.set("")
+            self.secModeDescr.set("Description of\nParanoia SM")
 
     def refreshBench(self):
         self.benchTxt.set("On this device decryption is going to take:\n" +
@@ -158,8 +159,10 @@ class CreatePpdbFrame(tk.Frame):
     def benchmark(self, *args):
         self.benchResult[0].set(str(round(cr.benchmark(0), 2)))
         self.refreshBench()
+        self.master.update_idletasks()
         self.benchResult[1].set(str(round(cr.benchmark(1), 2)))
         self.refreshBench()
+        self.master.update_idletasks()
         self.benchResult[2].set(str(round(cr.benchmark(2), 2)))
         self.refreshBench()
 

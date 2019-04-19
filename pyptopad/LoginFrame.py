@@ -71,7 +71,7 @@ class LoginFrame(tk.Frame):
                                            xmldb=c.read(self.userPass.get()),
                                             crypt=c))
         except exceptions.CryptoError:
-            print("Wrong password")
+            tk.messagebox.showerror("", "Wrong password.")
         '''except Exception as exc:
             print(exc)
             print("Wrong password.")'''
