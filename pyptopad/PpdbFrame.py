@@ -16,7 +16,7 @@ class PpdbFrame(tk.Frame):
         self.ddb = ddb
         self.curr = 0
 
-        # START OF LISTBOX
+        # START of Listbox & Scrollbar
         frame1 = tk.Frame(self)
 
         self.scroll1 = tk.Scrollbar(frame1)
@@ -31,10 +31,10 @@ class PpdbFrame(tk.Frame):
         self.scroll1["command"] = self.lbNotes.yview
 
         frame1.grid(row=0, column=0, columnspan=3,
-                   sticky=tk.E+tk.W+tk.S+tk.N)
-        # END OF LISTBOX
+                    sticky=tk.E+tk.W+tk.S+tk.N)
+        # END of Listbox & Scrollbar
 
-        # START OF TEXT
+        # START of Text & Scrollbar
         frame2 = tk.Frame(self, bd=4, relief="groove")
 
         self.scroll2 = tk.Scrollbar(frame2)
@@ -47,21 +47,21 @@ class PpdbFrame(tk.Frame):
         self.scroll2["command"] = self.txtText.yview
         frame2.grid(row=0, column=3, rowspan=2,
                     sticky=tk.E+tk.W+tk.S+tk.N)
-        #END OF TEXT
+        #END of Text & Scrollbar
 
         self.btnClose = tk.Button(self, text="Close", font=FONT,
-                            command=self.btnCloseClicked,
-                            anchor=tk.W)
+                                  command=self.btnCloseClicked,
+                                  anchor=tk.W)
         self.btnClose.grid(row=1, column=0)
 
         self.btnSave = tk.Button(self, text="Save", font=FONT,
-                            command=self.btnSaveClicked,
-                            anchor=tk.E)
+                                 command=self.btnSaveClicked,
+                                 anchor=tk.E)
         self.btnSave.grid(row=1, column=1)
 
         self.btnAdd = tk.Button(self, text="+", font=FONT,
-                           command=self.btnAddClicked,
-                           anchor=tk.E)
+                                command=self.btnAddClicked,
+                                anchor=tk.E)
         self.btnAdd.grid(row=1, column=2)
         
         self.lbNotes.select_set(0)
@@ -69,6 +69,8 @@ class PpdbFrame(tk.Frame):
             self.txtText.insert(tk.END, self.ddb.Notes[0].Texts[0].content)
 
         self.pack(padx=10, pady=10, anchor=tk.CENTER, expand=True)
+        # When the user decides to exit the app, the app offers the messagebox
+        # The user needs to press 'Close' button to return to the LoginFrame
         self.master.protocol("WM_DELETE_WINDOW", self.rUSure)
         self.master.title(file.split('/')[-1] + " - pyptopad")
 
@@ -113,6 +115,7 @@ class PpdbFrame(tk.Frame):
     def checkAdd(self, *args):
         if self.text.get():
             newNote = ET.fromstring("<note />")
+            # Proper addition of 'name' attrib
             newNote.set("name", self.text.get())
             self.ddb.Notes.append(db.Note(newNote))
             self.ddb.Notes[-1].Texts.append(db.Text())
@@ -127,7 +130,7 @@ class PpdbFrame(tk.Frame):
         self.curr = self.lbNotes.curselection()[0]
         self.txtText.delete("1.0", tk.END)
         for x in self.ddb.Notes[self.curr].Texts:
-            self.txtText.insert(tk.INSERT, x.content)
+            self.txtText.insert("1.0", x.content)
 
     def changeState(self, state):
         self.lbNotes["state"] = state

@@ -108,9 +108,9 @@ class CreatePpdbFrame(tk.Frame):
         self.changeSecMode("0")
 
         self.pack(padx=10, pady=10, anchor=tk.CENTER, expand=True)
+        # When user decides to exit the app, the app brings back LoginFrame
         self.master.protocol("WM_DELETE_WINDOW", self.closeWindow)
         self.master.title("Creating Database - pyptopad")
-        # THE END OF __INIT__
 
     def btnPpdbClicked(self):
         file = tk.filedialog.asksaveasfilename(filetypes=(("pyptopad dbs",
