@@ -40,7 +40,7 @@ class CreatePpdbFrame(tk.Frame):
         self.entPass1.grid(row=3, column=0, columnspan=4,
                            sticky=tk.W+tk.E+tk.S+tk.N)
 
-        lblPass = tk.Label(self, text="Repeat Password:", font=FONT,
+        lblPass = tk.Label(self, text="Repeat password:", font=FONT,
                            anchor=tk.W)
         lblPass.grid(row=4, column=0, sticky=tk.W+tk.E)
 
@@ -49,6 +49,10 @@ class CreatePpdbFrame(tk.Frame):
                                  textvariable=self.userPass2, width=3)
         self.entPass2.bind("<Return>", self.btnCreateClicked)
         self.entPass2.grid(row=5, column=0, columnspan=4, sticky=tk.W+tk.E+tk.S+tk.N)
+        
+        lblSec = tk.Label(self, text="Security mode:", font=FONT, 
+                          anchor=tk.W)
+        lblSec.grid(row=6, column=0, sticky=tk.W+tk.E)
 
         self.secMode = tk.IntVar()
         self.sclSec = tk.Scale(self, font=FONT, orient=tk.HORIZONTAL,
@@ -75,7 +79,7 @@ class CreatePpdbFrame(tk.Frame):
         self.benchResult[2].set("...")
 
         self.benchTxt = tk.StringVar()
-        self.refreshBench()
+        self.benchTxt.set("Run benchmark to see how long decryption\nwill take on your device in each security mode.")
 
         lblBench = tk.Label(self, font=SFONT, textvariable=self.benchTxt,
                             anchor=tk.W, justify=tk.LEFT, bd=4, relief="groove")
@@ -159,6 +163,7 @@ class CreatePpdbFrame(tk.Frame):
         self.master.update_idletasks()
 
     def benchmark(self, *args):
+        self.refreshBench()
         self.changeState("disabled")
         self.benchResult[0].set(str(round(cr.benchmark(0), 2)))
         self.refreshBench()
