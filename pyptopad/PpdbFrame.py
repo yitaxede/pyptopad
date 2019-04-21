@@ -19,16 +19,16 @@ class PpdbFrame(tk.Frame):
         # START OF LISTBOX
         frame1 = tk.Frame(self)
 
-        scroll1 = tk.Scrollbar(frame1)
-        scroll1.pack(side="right", fill="y")
+        self.scroll1 = tk.Scrollbar(frame1)
+        self.scroll1.pack(side="right", fill="y")
 
         self.lbNotes = tk.Listbox(frame1, font=FONT,
-                                  yscrollcommand=scroll1.set)
+                                  yscrollcommand=self.scroll1.set)
         self.refreshNotes()
         self.lbNotes.bind('<<ListboxSelect>>', self.changeNote)
         self.lbNotes.pack(side="left", fill="y")
 
-        scroll1["command"] = self.lbNotes.yview
+        self.scroll1["command"] = self.lbNotes.yview
 
         frame1.grid(row=0, column=0, columnspan=3,
                    sticky=tk.E+tk.W+tk.S+tk.N)
@@ -37,32 +37,32 @@ class PpdbFrame(tk.Frame):
         # START OF TEXT
         frame2 = tk.Frame(self, bd=4, relief="groove")
 
-        scroll2 = tk.Scrollbar(frame2)
-        scroll2.pack(side="right", fill="y")
+        self.scroll2 = tk.Scrollbar(frame2)
+        self.scroll2.pack(side="right", fill="y")
 
         self.txtText = tk.Text(frame2, font=FONT,
-                               yscrollcommand=scroll2.set)
+                               yscrollcommand=self.scroll2.set)
         self.txtText.pack(side="left", fill="y")
 
-        scroll2["command"] = self.txtText.yview
+        self.scroll2["command"] = self.txtText.yview
         frame2.grid(row=0, column=3, rowspan=2,
                     sticky=tk.E+tk.W+tk.S+tk.N)
         #END OF TEXT
 
-        btnClose = tk.Button(self, text="Close", font=FONT,
+        self.btnClose = tk.Button(self, text="Close", font=FONT,
                             command=self.btnCloseClicked,
                             anchor=tk.W)
-        btnClose.grid(row=1, column=0)
+        self.btnClose.grid(row=1, column=0)
 
-        btnSave = tk.Button(self, text="Save", font=FONT,
+        self.btnSave = tk.Button(self, text="Save", font=FONT,
                             command=self.btnSaveClicked,
                             anchor=tk.E)
-        btnSave.grid(row=1, column=1)
+        self.btnSave.grid(row=1, column=1)
 
-        btnAdd = tk.Button(self, text="+", font=FONT,
+        self.btnAdd = tk.Button(self, text="+", font=FONT,
                            command=self.btnAddClicked,
                            anchor=tk.E)
-        btnAdd.grid(row=1, column=2)
+        self.btnAdd.grid(row=1, column=2)
         
         self.lbNotes.select_set(0)
         if self.ddb.Notes:
@@ -74,7 +74,9 @@ class PpdbFrame(tk.Frame):
 
     def btnSaveClicked(self):
         self.saveNote(self.curr)
+        self.changeState("disabled")
         self.crypt.write(self.ddb.to_xml_string())
+        self.changeState("normal")
 
     def btnAddClicked(self):
         self.window = tk.Toplevel(self.master)
@@ -89,8 +91,8 @@ class PpdbFrame(tk.Frame):
         butt.grid(row=1)
 
     def btnCloseClicked(self):
-        msgbox = tk.messagebox.askquestion("Return to login", 
-                                           "Are you sure you want to return")
+        msgbox = tk.messagebox.askquestion("Return to login window", 
+                                           "Are you sure you want to return?")
         if msgbox == "yes":
             self.crypt.close()
             self.master.setFrame(lf.LoginFrame(self.master))
@@ -110,7 +112,9 @@ class PpdbFrame(tk.Frame):
 
     def checkAdd(self, *args):
         if self.text.get():
-            self.ddb.Notes.append(db.Note(ET.fromstring("<note name='" + self.text.get() + "'></note>")))
+            newNote = ET.fromstring("<note />")
+            newNote.set("name", self.text.get())
+            self.ddb.Notes.append(db.Note(newNote))
             self.ddb.Notes[-1].Texts.append(db.Text())
             self.ddb.Notes[-1].Texts[0].content = ""
             self.refreshNotes()
@@ -124,6 +128,16 @@ class PpdbFrame(tk.Frame):
         self.txtText.delete("1.0", tk.END)
         for x in self.ddb.Notes[self.curr].Texts:
             self.txtText.insert(tk.INSERT, x.content)
+
+    def changeState(self, state):
+        self.lbNotes["state"] = state
+        self.txtText["state"] = state
+        self.btnClose["state"] = state
+        self.btnSave["state"] = state
+        self.btnAdd["state"] = state
+        self.master.update_idletasks()
         
     def saveNote(self, i):
+        self.changeState("disabled")
         self.ddb.Notes[i].Texts[0].content = self.txtText.get("1.0", tk.END)[:-1]
+        self.changeState("normal")

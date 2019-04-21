@@ -49,11 +49,8 @@ class LoginFrame(tk.Frame):
         self.btnOpen.grid(row=3, column=1, sticky=tk.E)
 
         self.btnNew = tk.Button(self, text="New database", font=FONT,
-                           command=self.btnNewClicked)
+                                command=self.btnNewClicked)
         self.btnNew.grid(row=4, column=0, columnspan=2, sticky=tk.W+tk.S, pady=20)
-
-        self.rowconfigure(1, weight=1)
-        self.columnconfigure(0, weight=1)
 
         self.pack(padx=30, pady=20, expand=True)
         self.master.protocol("WM_DELETE_WINDOW", self.master.destroy)
@@ -67,7 +64,11 @@ class LoginFrame(tk.Frame):
 
     def btnOpenClicked(self, *args):
         c = cr.Cryptor()
-        c.open(self.ppdbPath.get())
+        try:
+            c.open(self.ppdbPath.get())
+        except FileNotFoundError:
+            tk.messagebox.showerror("", "No such file.")
+            return
         self.changeState("disabled")
         try:
             d = db.Database(c.read(self.userPass.get()))
@@ -75,21 +76,14 @@ class LoginFrame(tk.Frame):
                                               file=self.ppdbPath.get(),
                                               ddb=d,
                                               crypt=c))
+            return
         except exceptions.CryptoError:
             tk.messagebox.showerror("", "Wrong password.")
-            self.changeState("normal")
         except Exception as exc:
             print(exc)
             tk.messagebox.showerror("", "Unexpected error. Check console.")
-            self.changeState("normal")
-        '''except Exception as exc:
-            print(exc)
-            print("Wrong password.")'''
-        #c.close()
-        '''if self.userPass.get() == "lol":
-            self.master.setFrame(PpdbFrame(self.master))
-        else:
-            tk.messagebox.showerror("WRONG PASSWORD", "Are you kidding me?")'''
+        c.close()
+        self.changeState("normal")
 
     def changeState(self, state):
         self.entPpdb["state"] = state
