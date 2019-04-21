@@ -50,11 +50,24 @@ class Cryptor:
     def __init__(self):
         self.salts = [None for i in range(self.CRYPTOR_NUM)]
         self.cryptors = [None for i in range(self.CRYPTOR_NUM)]
-    
-    def create(self, file_name, password, sec_mode=1):
-        self.salts = [None for i in range(self.CRYPTOR_NUM)]
-        self.cryptors = [None for i in range(self.CRYPTOR_NUM)]
         
+    def to_bytes(self, s):
+        if isinstance(s, bytes):
+            return s
+        elif isinstance(s, str):
+            return s.encode()
+        else:
+            raise TypeError("Wrong format!")
+        
+    def to_str(self, b):
+        if isinstance(s, str):
+            return s
+        elif isinstance(s, bytes):
+            return s.decode()
+        else:
+            raise TypeError("Wrong format!")
+        
+    def create(self, file_name, password, sec_mode=1):
         if (sec_mode == '0' or sec_mode == 0):
             self.SEC_MODE = '0'
         elif (sec_mode == '1' or sec_mode == 1):
@@ -67,14 +80,14 @@ class Cryptor:
         #create file
         self.db_file = open(file_name, "wb+")
         #write SEC_MODE
-        self.db_file.write(self.SEC_MODE.encode())
+        self.db_file.write(self.to_bytes(self.SEC_MODE))
         
         #generate and write salts
         for i in range(self.CRYPTOR_NUM):
             self.salts[i] = urandom(self.SALT_SIZE)
             self.db_file.write(self.salts[i])
             
-        self.init_cryptors(password.encode())
+        self.init_cryptors(self.to_bytes(password))
         
     def open(self, file_name):
         self.db_file = open(file_name, "rb+")
@@ -82,47 +95,45 @@ class Cryptor:
     def close(self):
         self.db_file.close()
         
+    def encrypt(self, plaintext):
+        ciphertext = self.to_bytes(plaintext)
+        
+        for i in range(self.CRYPTOR_NUM):
+            ciphertext = self.cryptors[i].encrypt(ciphertext)
+            
+        return ciphertext
+        
+    def decrypt(self, ciphertext):
+        for i in reversed(range(self.CRYPTOR_NUM)):
+            plaintext = self.cryptors[i].decrypt(plaintext)
+            
+        return plaintext
+        
     def read(self, password):
         #read SEC_MODE
         self.db_file.seek(0)
-        self.SEC_MODE = self.db_file.read(1).decode()
+        self.SEC_MODE = self.to_str(self.db_file.read(1))
         
         #read salts
         for i in range(self.CRYPTOR_NUM):
             self.salts[i] = self.db_file.read(self.SALT_SIZE)
         
-        #read ciphertext
-        #self.password = password.encode()
         ciphertext = self.db_file.read()
-        #del self.password
         
-        self.init_cryptors(password.encode())
-        
-        #try to decrypt
-        plaintext = ciphertext
-        for i in reversed(range(self.CRYPTOR_NUM)):
-            plaintext = self.cryptors[i].decrypt(plaintext)
+        self.init_cryptors(password)
+        plaintext = self.decrypt(ciphertext)
             
-        #return decrypted plaintext
-        return plaintext.decode()
+        return self.to_str(plaintext)
         
     def write(self, plaintext):
-        #clear the file
+        #erase old ciphertext
         self.db_file.seek(1 + self.SALT_SIZE * self.CRYPTOR_NUM)
         self.db_file.truncate()
-        
-        if isinstance(plaintext, str):
-            plaintext = plaintext.encode()
-        ciphertext = plaintext
-        for i in range(self.CRYPTOR_NUM):
-            ciphertext = self.cryptors[i].encrypt(ciphertext)
-        
-        #write encrypted
-        self.db_file.write(ciphertext)
+
+        self.db_file.write(self.encrypt(plaintext))
         
     def init_cryptors(self, password):
-        if not isinstance(password, bytes):
-            password = password.encode()
+        password = self.to_bytes(password)
         
         kdfs = [None for i in range(self.CRYPTOR_NUM)]
         KEYS_SIZE = self.KEY_SIZE * self.CRYPTOR_NUM
