@@ -19,11 +19,14 @@ class CreatePpdbFrame(tk.Frame):
         lblPpdb.grid(row=0, column=0, sticky=tk.W)
 
         self.ppdbPath = tk.StringVar()
-        self.ppdbPath.set(os.getcwd())
+        self.ppdbPath.set(os.getcwd() + '/')
         self.entPpdb = tk.Entry(self, textvariable=self.ppdbPath,
                                 font=FONT, width=30)
         self.entPpdb.grid(row=1, column=0, columnspan=3,
                           sticky=tk.W+tk.E+tk.S+tk.N)
+        self.entPpdb.focus_set()
+        self.entPpdb.icursor(tk.END)
+        self.entPpdb.xview_moveto(1.0)
 
         self.btnPpdb = tk.Button(self, text="...", font=FONT,
                                  command=self.btnPpdbClicked,
@@ -50,6 +53,11 @@ class CreatePpdbFrame(tk.Frame):
         self.entPass2.bind("<Return>", self.btnCreateClicked)
         self.entPass2.grid(row=5, column=0, columnspan=4, sticky=tk.W+tk.E+tk.S+tk.N)
         
+        lblSec = tk.Label(self, text="Security mode:", font=FONT, 
+                          anchor=tk.W)
+        lblSec.grid(row=6, column=0, sticky=tk.W+tk.E)
+
+
         lblSec = tk.Label(self, text="Security mode:", font=FONT, 
                           anchor=tk.W)
         lblSec.grid(row=6, column=0, sticky=tk.W+tk.E)
@@ -104,9 +112,9 @@ class CreatePpdbFrame(tk.Frame):
         self.changeSecMode("0")
 
         self.pack(padx=10, pady=10, anchor=tk.CENTER, expand=True)
+        # When user decides to exit the app, the app brings back LoginFrame
         self.master.protocol("WM_DELETE_WINDOW", self.closeWindow)
         self.master.title("Creating Database - pyptopad")
-        # THE END OF __INIT__
 
     def btnPpdbClicked(self):
         file = tk.filedialog.asksaveasfilename(filetypes=(("pyptopad dbs",

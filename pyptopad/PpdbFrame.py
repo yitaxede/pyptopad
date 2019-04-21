@@ -16,51 +16,69 @@ class PpdbFrame(tk.Frame):
         self.ddb = ddb
         self.curr = 0
 
-        frame = tk.Frame(self)
+        # START of Listbox & Scrollbar
+        frame1 = tk.Frame(self)
 
-        scroll = tk.Scrollbar(frame)
-        scroll.pack(side="right", fill="y")
+        self.scroll1 = tk.Scrollbar(frame1)
+        self.scroll1.pack(side="right", fill="y")
 
-        self.lbNotes = tk.Listbox(frame, font=FONT, yscrollcommand=scroll.set)
+        self.lbNotes = tk.Listbox(frame1, font=FONT,
+                                  yscrollcommand=self.scroll1.set)
         self.refreshNotes()
         self.lbNotes.bind('<<ListboxSelect>>', self.changeNote)
         self.lbNotes.pack(side="left", fill="y")
 
-        scroll["command"] = self.lbNotes.yview
+        self.scroll1["command"] = self.lbNotes.yview
 
-        frame.grid(row=0, column=0, columnspan=3,
-                   sticky=tk.E+tk.W+tk.S+tk.N)
+        frame1.grid(row=0, column=0, columnspan=3,
+                    sticky=tk.E+tk.W+tk.S+tk.N)
+        # END of Listbox & Scrollbar
 
-        self.txtText = tk.Text(self, font=FONT)
-        self.txtText.grid(row=0, column=3, rowspan=2,
-                          sticky=tk.E+tk.W+tk.S+tk.N)
+        # START of Text & Scrollbar
+        frame2 = tk.Frame(self, bd=4, relief="groove")
 
-        btnClose = tk.Button(self, text="Close", font=FONT,
-                            command=self.btnCloseClicked,
-                            anchor=tk.W)
-        btnClose.grid(row=1, column=0)
+        self.scroll2 = tk.Scrollbar(frame2)
+        self.scroll2.pack(side="right", fill="y")
 
-        btnSave = tk.Button(self, text="Save", font=FONT,
-                            command=self.btnSaveClicked,
-                            anchor=tk.E)
-        btnSave.grid(row=1, column=1)
+        self.txtText = tk.Text(frame2, font=FONT,
+                               yscrollcommand=self.scroll2.set)
+        self.txtText.pack(side="left", fill="y")
 
-        btnAdd = tk.Button(self, text="+", font=FONT,
-                           command=self.btnAddClicked,
-                           anchor=tk.E)
-        btnAdd.grid(row=1, column=2)
+        self.scroll2["command"] = self.txtText.yview
+        frame2.grid(row=0, column=3, rowspan=2,
+                    sticky=tk.E+tk.W+tk.S+tk.N)
+        #END of Text & Scrollbar
+
+        self.btnClose = tk.Button(self, text="Close", font=FONT,
+                                  command=self.btnCloseClicked,
+                                  anchor=tk.W)
+        self.btnClose.grid(row=1, column=0)
+
+        self.btnSave = tk.Button(self, text="Save", font=FONT,
+                                 command=self.btnSaveClicked,
+                                 anchor=tk.E)
+        self.btnSave.grid(row=1, column=1)
+
+        self.btnAdd = tk.Button(self, text="+", font=FONT,
+                                command=self.btnAddClicked,
+                                anchor=tk.E)
+        self.btnAdd.grid(row=1, column=2)
         
         self.lbNotes.select_set(0)
         if self.ddb.Notes:
             self.txtText.insert(tk.END, self.ddb.Notes[0].Texts[0].content)
 
         self.pack(padx=10, pady=10, anchor=tk.CENTER, expand=True)
+        # When the user decides to exit the app, the app offers the messagebox
+        # The user needs to press 'Close' button to return to the LoginFrame
         self.master.protocol("WM_DELETE_WINDOW", self.rUSure)
         self.master.title(file.split('/')[-1] + " - pyptopad")
 
     def btnSaveClicked(self):
         self.saveNote(self.curr)
+        self.changeState("disabled")
         self.crypt.write(self.ddb.to_xml_string())
+        self.changeState("normal")
 
     def btnAddClicked(self):
         self.window = tk.Toplevel(self.master)
@@ -75,8 +93,8 @@ class PpdbFrame(tk.Frame):
         butt.grid(row=1)
 
     def btnCloseClicked(self):
-        msgbox = tk.messagebox.askquestion("Return to login", 
-                                           "Are you sure you want to return")
+        msgbox = tk.messagebox.askquestion("Return to login window", 
+                                           "Are you sure you want to return?")
         if msgbox == "yes":
             self.crypt.close()
             self.master.setFrame(lf.LoginFrame(self.master))
@@ -96,7 +114,10 @@ class PpdbFrame(tk.Frame):
 
     def checkAdd(self, *args):
         if self.text.get():
-            self.ddb.Notes.append(db.Note(ET.fromstring("<note name='" + self.text.get() + "'></note>")))
+            newNote = ET.fromstring("<note />")
+            # Proper addition of 'name' attrib
+            newNote.set("name", self.text.get())
+            self.ddb.Notes.append(db.Note(newNote))
             self.ddb.Notes[-1].Texts.append(db.Text())
             self.ddb.Notes[-1].Texts[0].content = ""
             self.refreshNotes()
@@ -109,7 +130,17 @@ class PpdbFrame(tk.Frame):
         self.curr = self.lbNotes.curselection()[0]
         self.txtText.delete("1.0", tk.END)
         for x in self.ddb.Notes[self.curr].Texts:
-            self.txtText.insert(tk.INSERT, x.content)
+            self.txtText.insert("1.0", x.content)
+
+    def changeState(self, state):
+        self.lbNotes["state"] = state
+        self.txtText["state"] = state
+        self.btnClose["state"] = state
+        self.btnSave["state"] = state
+        self.btnAdd["state"] = state
+        self.master.update_idletasks()
         
     def saveNote(self, i):
+        self.changeState("disabled")
         self.ddb.Notes[i].Texts[0].content = self.txtText.get("1.0", tk.END)[:-1]
+        self.changeState("normal")
