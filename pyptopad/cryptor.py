@@ -57,15 +57,15 @@ class Cryptor:
         elif isinstance(s, str):
             return s.encode()
         else:
-            raise TypeError("Wrong format!")
+            raise TypeError("Cannot convert to bytes!")
         
     def to_str(self, b):
-        if isinstance(s, str):
-            return s
-        elif isinstance(s, bytes):
-            return s.decode()
+        if isinstance(b, str):
+            return b
+        elif isinstance(b, bytes):
+            return b.decode()
         else:
-            raise TypeError("Wrong format!")
+            raise TypeError("Cannot convert to string!")
         
     def create(self, file_name, password, sec_mode=1):
         if (sec_mode == '0' or sec_mode == 0):
@@ -104,6 +104,8 @@ class Cryptor:
         return ciphertext
         
     def decrypt(self, ciphertext):
+        plaintext = ciphertext
+        
         for i in reversed(range(self.CRYPTOR_NUM)):
             plaintext = self.cryptors[i].decrypt(plaintext)
             
