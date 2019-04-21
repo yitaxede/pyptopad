@@ -16,24 +16,38 @@ class PpdbFrame(tk.Frame):
         self.ddb = ddb
         self.curr = 0
 
-        frame = tk.Frame(self)
+        # START OF LISTBOX
+        frame1 = tk.Frame(self)
 
-        scroll = tk.Scrollbar(frame)
-        scroll.pack(side="right", fill="y")
+        scroll1 = tk.Scrollbar(frame1)
+        scroll1.pack(side="right", fill="y")
 
-        self.lbNotes = tk.Listbox(frame, font=FONT, yscrollcommand=scroll.set)
+        self.lbNotes = tk.Listbox(frame1, font=FONT,
+                                  yscrollcommand=scroll1.set)
         self.refreshNotes()
         self.lbNotes.bind('<<ListboxSelect>>', self.changeNote)
         self.lbNotes.pack(side="left", fill="y")
 
-        scroll["command"] = self.lbNotes.yview
+        scroll1["command"] = self.lbNotes.yview
 
-        frame.grid(row=0, column=0, columnspan=3,
+        frame1.grid(row=0, column=0, columnspan=3,
                    sticky=tk.E+tk.W+tk.S+tk.N)
+        # END OF LISTBOX
 
-        self.txtText = tk.Text(self, font=FONT)
-        self.txtText.grid(row=0, column=3, rowspan=2,
-                          sticky=tk.E+tk.W+tk.S+tk.N)
+        # START OF TEXT
+        frame2 = tk.Frame(self)
+
+        scroll2 = tk.Scrollbar(frame2)
+        scroll2.pack(side="right", fill="y")
+
+        self.txtText = tk.Text(frame2, font=FONT,
+                               yscrollcommand=scroll2.set)
+        self.txtText.pack(side="left", fill="y")
+
+        scroll2["command"] = self.txtText.yview
+        frame2.grid(row=0, column=3, rowspan=2,
+                    sticky=tk.E+tk.W+tk.S+tk.N)
+        #END OF TEXT
 
         btnClose = tk.Button(self, text="Close", font=FONT,
                             command=self.btnCloseClicked,
