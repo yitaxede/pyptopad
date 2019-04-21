@@ -35,7 +35,7 @@ class PpdbFrame(tk.Frame):
         # END OF LISTBOX
 
         # START OF TEXT
-        frame2 = tk.Frame(self)
+        frame2 = tk.Frame(self, bd=4, relief="groove")
 
         scroll2 = tk.Scrollbar(frame2)
         scroll2.pack(side="right", fill="y")

@@ -19,11 +19,14 @@ class CreatePpdbFrame(tk.Frame):
         lblPpdb.grid(row=0, column=0, sticky=tk.W)
 
         self.ppdbPath = tk.StringVar()
-        self.ppdbPath.set(os.getcwd())
+        self.ppdbPath.set(os.getcwd() + '/')
         self.entPpdb = tk.Entry(self, textvariable=self.ppdbPath,
                                 font=FONT, width=30)
         self.entPpdb.grid(row=1, column=0, columnspan=3,
                           sticky=tk.W+tk.E+tk.S+tk.N)
+        self.entPpdb.focus_set()
+        self.entPpdb.icursor(tk.END)
+        self.entPpdb.xview_moveto(1.0)
 
         self.btnPpdb = tk.Button(self, text="...", font=FONT,
                                  command=self.btnPpdbClicked,
