@@ -9,7 +9,7 @@ from nacl import pwhash, secret, utils
 
 '''
                 KDF comparison table
-                
+
             INTERACTIVE     MODERATE    SENSITIVE
 argon2i       0m0.439s      0m2.098s    0m11.237s
 scrypt        0m0.205s      0m0.894s    0m6.716s
@@ -31,7 +31,7 @@ mem = pwhash.argon2i.MEMLIMIT_INTERACTIVE
 # mem = pwhash.scrypt.MEMLIMIT_SENSITIVE
 
 key = kdf(secret.SecretBox.KEY_SIZE, password.encode(), salt,
-                 opslimit=ops, memlimit=mem)
+          opslimit=ops, memlimit=mem)
 
 box = secret.SecretBox(key)
 
@@ -39,4 +39,3 @@ encrypted = box.encrypt(message.encode())
 
 received = box.decrypt(encrypted)
 print(received.decode('utf-8'))
-

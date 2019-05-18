@@ -2,7 +2,7 @@
 import xml.etree.ElementTree as ET
 
 
-#Database format example
+# Database format example
 '''
 <database>
     <note name='love letter to Jane'>
@@ -35,21 +35,21 @@ Usage:
 
 '''
 
+
 class Database:
     def __init__(self, xml_string=None):
         self.Notes = []
         self.attributes = {}
-        
-        if xml_string == None:
+
+        if xml_string is None:
             return
-            
+
         db = ET.fromstring(xml_string)
         self.attributes = db.attrib.copy()
-        
+
         for note in db:
             self.Notes.append(Note(note))
-        
-        
+
     def to_xml_string(self):
         xml = ET.Element('database')
         xml.attrib = self.attributes.copy()
@@ -57,42 +57,41 @@ class Database:
             xml.append(note.to_xml())
         return ET.tostring(xml)
 
-    
+
 class Note:
     def __init__(self, xml=None):
         self.Texts = []
         self.attributes = {}
-    
-        if xml == None:
+
+        if xml is None:
             return
-        
+
         self.attributes = xml.attrib.copy()
-            
+
         for txt in xml:
             self.Texts.append(Text(txt))
-    
+
     def to_xml(self):
         xml = ET.Element('note')
         xml.attrib = self.attributes.copy()
         for text in self.Texts:
             xml.append(text.to_xml())
         return xml
-        
-        
+
+
 class Text:
     def __init__(self, xml=None):
         self.content = {}
         self.attributes = {}
-        
-        if xml == None:
+
+        if xml is None:
             return
-            
+
         self.attributes = xml.attrib.copy()
         self.content = xml.text
-        
+
     def to_xml(self):
         xml = ET.Element('text')
         xml.text = self.content
         xml.attrib = self.attributes.copy()
         return xml
-        
