@@ -83,15 +83,29 @@ class PpdbFrame(tk.Frame):
 
     def btnAddClicked(self):
         self.window = tk.Toplevel(self.master)
+        self.window.geometry("350x100+" + str(self.master.winfo_x() +
+                                              int(self.master.winfo_width() / 2) -
+                                              175) +
+                             '+' + str(self.master.winfo_y() +
+                                       int(self.master.winfo_height() / 2) - 50))
+        subFrame = tk.Frame(self.window)
+        lblEntry = tk.Label(subFrame, text="Enter the title for a new note:",
+                            font=FONT, anchor=tk.W)
+        lblEntry.grid(row=0, columnspan=2, sticky=tk.W+tk.E)
         self.text = tk.StringVar()
-        entry = tk.Entry(self.window, textvariable=self.text,
+        entry = tk.Entry(subFrame, textvariable=self.text,
                          font=FONT)
         entry.bind("<Return>", self.checkAdd)
-        entry.grid(row=0)
+        entry.grid(row=1, columnspan=2, sticky=tk.W+tk.E)
         entry.focus_set()
-        butt = tk.Button(self.window, text="Add", font=FONT,
-                         command=self.checkAdd, anchor=tk.E)
-        butt.grid(row=1)
+        butt1 = tk.Button(subFrame, text="Add", font=FONT,
+                          command=self.checkAdd, anchor=tk.E)
+        butt1.grid(row=2, column=0)
+        butt2 = tk.Button(subFrame, text="Cancel", font=FONT,
+                          command=self.window.destroy)
+        butt2.grid(row=2, column=1)
+        subFrame.pack(padx=10, pady=10, expand=True)
+        self.window.title("New note - " + self.master.title())
 
     def btnCloseClicked(self):
         msgbox = tk.messagebox.askquestion("Return to login window",

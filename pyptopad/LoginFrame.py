@@ -84,7 +84,9 @@ class LoginFrame(tk.Frame):
                                               crypt=c))
             return
         except exceptions.CryptoError:
-            messagebox.showerror("", "Wrong password.")
+            messagebox.showerror("Decryption error", """Wrong password or
+corrupted database.""")
+            self.userPass.set("")
         except Exception as exc:
             print(exc)
             messagebox.showerror("", "Unexpected error. Check console.")
