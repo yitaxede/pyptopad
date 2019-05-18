@@ -35,7 +35,7 @@ class GOST_Cryptor:
 # SEC_MODE must be CHAR '0', '1' or '2'
 #               or INT 0, 1 or 2
 class Cryptor:
-    '''
+    """
     The crypto part of the pyptopad
     USAGE:
     Open existing database:
@@ -50,7 +50,7 @@ class Cryptor:
     c.create("db.ppdb", "password", '2')
     c.write("string that you want to write")
     c.close()
-    '''
+    """
     SALT_SIZE = 32  # bytes
     KEY_SIZE = 32  # bytes
     CRYPTOR_NUM = 3
@@ -60,6 +60,22 @@ class Cryptor:
         self.cryptors = [None for i in range(self.CRYPTOR_NUM)]
 
     def to_bytes(self, s):
+        """
+        Save conversion from string to bytes
+
+        If the given argument is of bytes type already,
+        everything still works.
+
+        Parameters
+        ----------
+        s :  str or bytes
+
+        Returning value:
+        ----------
+        bytes :
+           Converted string
+           If conversion fails, an exception is raised
+        """
         if isinstance(s, bytes):
             return s
         elif isinstance(s, str):
@@ -68,6 +84,22 @@ class Cryptor:
             raise TypeError("Cannot convert to bytes!")
 
     def to_str(self, b):
+        """
+        Save conversion from bytes to string
+
+        If the given argument is of string type already,
+        everything still works.
+
+        Parameters
+        ----------
+        b :  bytes or str
+
+        Returning value:
+        ----------
+        str :
+           Converted bytes
+           If conversion fails, an exception is raised
+        """
         if isinstance(b, str):
             return b
         elif isinstance(b, bytes):
@@ -76,6 +108,17 @@ class Cryptor:
             raise TypeError("Cannot convert to string!")
 
     def create(self, file_name, password, sec_mode=1):
+        """
+        Create new database
+
+        Parameters
+        ----------
+        file_name :  str
+        password : str or bytes
+        sec_mode=1 : str '0', '1', '2' or int 0, 1, 2
+
+
+        """
         if (sec_mode == '0' or sec_mode == 0):
             self.SEC_MODE = '0'
         elif (sec_mode == '1' or sec_mode == 1):
@@ -98,12 +141,40 @@ class Cryptor:
         self.init_cryptors(self.to_bytes(password))
 
     def open(self, file_name):
+        """
+        Open the database file
+
+        This function must be called
+        before attempting to decrypt.
+        """
         self.db_file = open(file_name, "rb+")
 
     def close(self):
+        """
+        Close the database file
+
+        This function must be called
+        after the work is done.
+        """
         self.db_file.close()
 
     def encrypt(self, plaintext):
+        """
+        Encrypt the plaintext
+
+        Note that self.init_cryptors() must be called
+        before calling this function.
+
+        Parameters
+        ----------
+        plaintext :  str or bytes
+
+        Returning value:
+        ----------
+        bytes
+           Ciphertext
+           If encryption fails, an exception is raised
+        """
         ciphertext = self.to_bytes(plaintext)
 
         for i in range(self.CRYPTOR_NUM):
@@ -112,6 +183,22 @@ class Cryptor:
         return ciphertext
 
     def decrypt(self, ciphertext):
+        """
+        Decrypt the ciphertext
+
+        Note that self.init_cryptors() must be called
+        before calling this function.
+
+        Parameters
+        ----------
+        ciphertext :  bytes
+
+        Returning value:
+        ----------
+        str
+           Decrypted plaintext
+           If decryption fails, an exception is raised
+        """
         plaintext = ciphertext
 
         for i in reversed(range(self.CRYPTOR_NUM)):
@@ -120,6 +207,22 @@ class Cryptor:
         return plaintext
 
     def read(self, password):
+        """
+        Read the database
+
+        Read SEC_MODE, salts and encrypted database,
+        then try to decrypt it.
+
+        Parameters
+        ----------
+        password : string or bytes
+
+        Returning value:
+        ----------
+        str
+           Decrypted plaintext
+           If decryption fails, an exception is raised
+        """
         # read SEC_MODE
         self.db_file.seek(0)
         self.SEC_MODE = self.to_str(self.db_file.read(1))
@@ -136,6 +239,16 @@ class Cryptor:
         return self.to_str(plaintext)
 
     def write(self, plaintext):
+        """
+        Write the plaintext in the open database
+
+        Old content of database will be destroyed,
+        while sec_mode and salts are preserved.
+
+        Parameters
+        ----------
+        plaintext : string or bytes
+        """
         # erase old ciphertext
         self.db_file.seek(1 + self.SALT_SIZE * self.CRYPTOR_NUM)
         self.db_file.truncate()
@@ -143,6 +256,16 @@ class Cryptor:
         self.db_file.write(self.encrypt(plaintext))
 
     def init_cryptors(self, password):
+        """
+        Initialize the cryptors according to the given sec_mode
+
+        This function must be called before
+        trying to encrypt/decrypt anything.
+
+        Parameters
+        ----------
+        password : string or bytes
+        """
         password = self.to_bytes(password)
 
         kdfs = [None for i in range(self.CRYPTOR_NUM)]
@@ -174,12 +297,12 @@ class Cryptor:
         kdfs[1] = lambda pw: pbkdf2(pw, self.salts[1], gost_iters, KEYS_SIZE)
 
         kdfs[2] = lambda pw: PBKDF2HMAC(
-                                            algorithm=hashes.SHA256(),
-                                            length=KEYS_SIZE,
-                                            salt=self.salts[2],
-                                            iterations=crypt_iters,
-                                            backend=default_backend()
-                                    ).derive(pw)
+                                        algorithm=hashes.SHA256(),
+                                        length=KEYS_SIZE,
+                                        salt=self.salts[2],
+                                        iterations=crypt_iters,
+                                        backend=default_backend()
+                             ).derive(pw)
 
         long_key = password
         for i in range(self.CRYPTOR_NUM):
@@ -193,9 +316,19 @@ class Cryptor:
         self.cryptors[2] = secret.SecretBox(keys[0])
 
 
-# take sec_mode (STR '0', '1', '2' or INT 0, 1, 2)
-# return time in seconds for key initialization
 def benchmark(sec_mode):
+    """
+    Test perfomance of various security modes on this device
+
+    Parameters
+    ----------
+    sec_mode : str '0', '1', '2' or int 0, 1, 2
+
+    Returning value:
+    ----------
+    float
+        Time in seconds for key initialization
+    """
     c = Cryptor()
 
     if (sec_mode == '0' or sec_mode == 0):
