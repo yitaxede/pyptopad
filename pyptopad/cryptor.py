@@ -17,6 +17,9 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 
 class GOST_Cryptor:
+    """
+    GOST 34.12-2015 128-bit block cipher Kuznechik
+    """
     IV_SIZE = 32
 
     def __init__(self, key):
@@ -70,7 +73,7 @@ class Cryptor:
         ----------
         s :  str or bytes
 
-        Returning value:
+        Returns:
         ----------
         bytes :
            Converted string
@@ -94,7 +97,7 @@ class Cryptor:
         ----------
         b :  bytes or str
 
-        Returning value:
+        Returns:
         ----------
         str :
            Converted bytes
@@ -169,7 +172,7 @@ class Cryptor:
         ----------
         plaintext :  str or bytes
 
-        Returning value:
+        Returns:
         ----------
         bytes
            Ciphertext
@@ -193,7 +196,7 @@ class Cryptor:
         ----------
         ciphertext :  bytes
 
-        Returning value:
+        Returns:
         ----------
         str
            Decrypted plaintext
@@ -217,7 +220,7 @@ class Cryptor:
         ----------
         password : string or bytes
 
-        Returning value:
+        Returns:
         ----------
         str
            Decrypted plaintext
@@ -324,7 +327,7 @@ def benchmark(sec_mode):
     ----------
     sec_mode : str '0', '1', '2' or int 0, 1, 2
 
-    Returning value:
+    Returns:
     ----------
     float
         Time in seconds for key initialization
