@@ -36,21 +36,23 @@ class GOST_Cryptor:
 #               or INT 0, 1 or 2
 class Cryptor:
     '''
+    The crypto part of the pyptopad
     USAGE:
+    Open existing database:
     c = Cryptor()
     c.open("db.ppdb")
     plaintext = c.read("password")
     c.write("string that you want to write")
     c.close()
 
-    OR:
+    Create new database:
     c = Cryptor()
     c.create("db.ppdb", "password", '2')
     c.write("string that you want to write")
     c.close()
     '''
     SALT_SIZE = 32  # bytes
-    KEY_SIZE = 32
+    KEY_SIZE = 32  # bytes
     CRYPTOR_NUM = 3
 
     def __init__(self):
@@ -191,8 +193,8 @@ class Cryptor:
         self.cryptors[2] = secret.SecretBox(keys[0])
 
 
-# takes sec_mode (STR '0', '1', '2' or INT 0, 1, 2)
-# returns time in seconds for key initialization
+# take sec_mode (STR '0', '1', '2' or INT 0, 1, 2)
+# return time in seconds for key initialization
 def benchmark(sec_mode):
     c = Cryptor()
 

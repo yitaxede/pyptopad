@@ -7,6 +7,7 @@ import database as db
 
 FONT = ("DejaVu Sans Mono Bold", 12)
 
+
 class PpdbFrame(tk.Frame):
     def __init__(self, master, file, ddb, crypt):
         tk.Frame.__init__(self, master)
@@ -47,7 +48,7 @@ class PpdbFrame(tk.Frame):
         self.scroll2["command"] = self.txtText.yview
         frame2.grid(row=0, column=3, rowspan=2,
                     sticky=tk.E+tk.W+tk.S+tk.N)
-        #END of Text & Scrollbar
+        # END of Text & Scrollbar
 
         self.btnClose = tk.Button(self, text="Close", font=FONT,
                                   command=self.btnCloseClicked,
@@ -63,7 +64,7 @@ class PpdbFrame(tk.Frame):
                                 command=self.btnAddClicked,
                                 anchor=tk.E)
         self.btnAdd.grid(row=1, column=2)
-        
+
         self.lbNotes.select_set(0)
         if self.ddb.Notes:
             self.txtText.insert(tk.END, self.ddb.Notes[0].Texts[0].content)
@@ -93,15 +94,15 @@ class PpdbFrame(tk.Frame):
         butt.grid(row=1)
 
     def btnCloseClicked(self):
-        msgbox = tk.messagebox.askquestion("Return to login window", 
+        msgbox = tk.messagebox.askquestion("Return to login window",
                                            "Are you sure you want to return?")
         if msgbox == "yes":
             self.crypt.close()
             self.master.setFrame(lf.LoginFrame(self.master))
 
     def rUSure(self, *args):
-        msgbox = tk.messagebox.askquestion("Exit application", 
-                                           "Are you sure you want to exit the application?")
+        msgbox = tk.messagebox.askquestion("Close pyptopad",
+                                           "Are you sure?")
         if msgbox == "yes":
             self.crypt.close()
             self.master.destroy()
@@ -139,8 +140,9 @@ class PpdbFrame(tk.Frame):
         self.btnSave["state"] = state
         self.btnAdd["state"] = state
         self.master.update_idletasks()
-        
+
     def saveNote(self, i):
         self.changeState("disabled")
-        self.ddb.Notes[i].Texts[0].content = self.txtText.get("1.0", tk.END)[:-1]
+        self.ddb.Notes[i].Texts[0].content = self.txtText.get("1.0",
+                                                              tk.END)[:-1]
         self.changeState("normal")

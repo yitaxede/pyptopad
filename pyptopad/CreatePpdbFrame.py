@@ -9,6 +9,7 @@ import database as db
 FONT = ("DejaVu Sans Mono Bold", 12)
 SFONT = (FONT[0], FONT[1] - 2)
 
+
 class CreatePpdbFrame(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
@@ -51,14 +52,14 @@ class CreatePpdbFrame(tk.Frame):
         self.entPass2 = tk.Entry(self, font=FONT, show='*',
                                  textvariable=self.userPass2, width=3)
         self.entPass2.bind("<Return>", self.btnCreateClicked)
-        self.entPass2.grid(row=5, column=0, columnspan=4, sticky=tk.W+tk.E+tk.S+tk.N)
-        
-        lblSec = tk.Label(self, text="Security mode:", font=FONT, 
+        self.entPass2.grid(row=5, column=0, columnspan=4,
+                           sticky=tk.W+tk.E+tk.S+tk.N)
+
+        lblSec = tk.Label(self, text="Security mode:", font=FONT,
                           anchor=tk.W)
         lblSec.grid(row=6, column=0, sticky=tk.W+tk.E)
 
-
-        lblSec = tk.Label(self, text="Security mode:", font=FONT, 
+        lblSec = tk.Label(self, text="Security mode:", font=FONT,
                           anchor=tk.W)
         lblSec.grid(row=6, column=0, sticky=tk.W+tk.E)
 
@@ -67,16 +68,18 @@ class CreatePpdbFrame(tk.Frame):
                                showvalue=0,
                                variable=self.secMode, to=2,
                                command=self.changeSecMode)
-        self.sclSec.grid(row=7, column=0, columnspan=4, sticky=tk.W+tk.E+tk.S+tk.N)
+        self.sclSec.grid(row=7, column=0, columnspan=4,
+                         sticky=tk.W+tk.E+tk.S+tk.N)
 
         self.secModeStr = tk.StringVar()
-        self.lblSecMode = tk.Label(self, font=FONT, textvariable=self.secModeStr,
-                                   anchor=tk.W)
+        self.lblSecMode = tk.Label(self, font=FONT,
+                                   textvariable=self.secModeStr, anchor=tk.W)
         self.lblSecMode.grid(row=8, column=0, columnspan=4,
                              sticky=tk.W)
 
         self.secModeDescr = tk.StringVar()
-        lblSecModeDescr = tk.Label(self, font=SFONT, textvariable=self.secModeDescr,
+        lblSecModeDescr = tk.Label(self, font=SFONT,
+                                   textvariable=self.secModeDescr,
                                    anchor=tk.W, justify=tk.LEFT)
         lblSecModeDescr.grid(row=9, column=0, columnspan=4,
                              sticky=tk.W)
@@ -87,27 +90,28 @@ class CreatePpdbFrame(tk.Frame):
         self.benchResult[2].set("...")
 
         self.benchTxt = tk.StringVar()
-        self.benchTxt.set("Run benchmark to see how long decryption\nwill take on your device in each security mode.")
+        self.benchTxt.set("""Run benchmark to see how long decryption
+will take on your device in each security mode.""")
 
         lblBench = tk.Label(self, font=SFONT, textvariable=self.benchTxt,
-                            anchor=tk.W, justify=tk.LEFT, bd=4, relief="groove")
+                            anchor=tk.W, justify=tk.LEFT,
+                            bd=4, relief="groove")
         lblBench.grid(row=10, column=0, columnspan=4, sticky=tk.W+tk.E)
 
         self.btnCancel = tk.Button(self, text="Cancel", font=FONT,
-                              command=self.closeWindow,
-                              anchor=tk.W)
+                                   command=self.closeWindow,
+                                   anchor=tk.W)
         self.btnCancel.grid(row=11, column=0, sticky=tk.W)
 
         self.btnBench = tk.Button(self, text="Benchmark", font=FONT,
-                             command=self.benchmark,
-                             anchor=tk.E)
+                                  command=self.benchmark,
+                                  anchor=tk.E)
         self.btnBench.grid(row=11, column=2, sticky=tk.E)
 
         self.btnCreate = tk.Button(self, text="Create", font=FONT,
-                              command=self.btnCreateClicked,
-                              anchor=tk.E)
+                                   command=self.btnCreateClicked,
+                                   anchor=tk.E)
         self.btnCreate.grid(row=11, column=3, sticky=tk.E)
-
 
         self.changeSecMode("0")
 
@@ -118,7 +122,9 @@ class CreatePpdbFrame(tk.Frame):
 
     def btnPpdbClicked(self):
         file = tk.filedialog.asksaveasfilename(filetypes=(("pyptopad dbs",
-                                "*.ppdb"), ("all files", "*.*")))
+                                                           "*.ppdb"),
+                                                          ("all files",
+                                                           "*.*")))
         if file:
             self.ppdbPath.set(file)
 
@@ -129,7 +135,9 @@ class CreatePpdbFrame(tk.Frame):
         c = cr.Cryptor()
         self.changeState("disabled")
         try:
-            c.create(self.ppdbPath.get(), self.userPass1.get(), self.secMode.get())
+            c.create(self.ppdbPath.get(),
+                     self.userPass1.get(),
+                     self.secMode.get())
         except Exception:
             tk.messagebox.showerror("", "Wrong file path.")
             self.changeState("normal")
@@ -143,21 +151,31 @@ class CreatePpdbFrame(tk.Frame):
         if mode == '0':
             self.lblSecMode["fg"] = "green"
             self.secModeStr.set("Nothing to Hide")
-            self.secModeDescr.set("I put perfomance above security.\nIn this mode decryption will be quickest,\nbut you better use a strong password.")
+            descr = "I put perfomance above security.\n" \
+                    "In this mode decryption is quickest,\n" \
+                    "but you better use a strong password."
+            self.secModeDescr.set(descr)
         elif mode == '1':
             self.lblSecMode["fg"] = "dark goldenrod"
             self.secModeStr.set("Standard")
-            self.secModeDescr.set("Decrypion will take a little bit longer in this mode,\nwhich makes brute-force attacks harder.")
+            descr = "Decrypion takes a little bit longer in this mode,\n" \
+                    "which makes brute-force attacks harder."
+            self.secModeDescr.set(descr)
         elif mode == '2':
             self.lblSecMode["fg"] = "red"
             self.secModeStr.set("Paranoia")
-            self.secModeDescr.set("Just because you're paranoid,\ndoesn't mean they're not watching you.")
+            descr = "Just because you're paranoid,\n" \
+                    "doesn't mean they're not watching you."
+            self.secModeDescr.set(descr)
 
     def refreshBench(self):
-        self.benchTxt.set("On this device decryption is going to take:\n" +
-                          self.benchResult[0].get() + "s with Nothing to Hide Security Mode\n" +
-                          self.benchResult[1].get() + "s with Standard Security Mode\n" +
-                          self.benchResult[2].get() + "s with Paranoia Security Mode")
+        self.benchTxt.set("On this device decryption is going to take:\n"
+                          + self.benchResult[0].get()
+                          + "s with Nothing to Hide Security Mode\n"
+                          + self.benchResult[1].get()
+                          + "s with Standard Security Mode\n"
+                          + self.benchResult[2].get()
+                          + "s with Paranoia Security Mode")
 
     def changeState(self, state):
         self.entPpdb["state"] = state

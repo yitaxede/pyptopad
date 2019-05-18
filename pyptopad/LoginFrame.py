@@ -12,6 +12,7 @@ import database as db
 
 FONT = ("DejaVu Sans Mono Bold", 12)
 
+
 class LoginFrame(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
@@ -36,7 +37,7 @@ class LoginFrame(tk.Frame):
         self.btnPpdb.grid(row=1, column=1, sticky=tk.E, ipadx=1)
 
         lblPass = tk.Label(self, text="Password:", font=FONT,
-                                anchor=tk.W)
+                           anchor=tk.W)
         lblPass.grid(row=2, column=0, sticky=tk.W+tk.E)
 
         self.userPass = tk.StringVar()
@@ -52,7 +53,8 @@ class LoginFrame(tk.Frame):
 
         self.btnNew = tk.Button(self, text="New database", font=FONT,
                                 command=self.btnNewClicked)
-        self.btnNew.grid(row=4, column=0, columnspan=2, sticky=tk.W+tk.S, pady=20)
+        self.btnNew.grid(row=4, column=0, columnspan=2,
+                         sticky=tk.W+tk.S, pady=20)
 
         self.pack(padx=30, pady=20, expand=True)
         # When user decides to exit the app, the app is really being destroyed
@@ -60,8 +62,8 @@ class LoginFrame(tk.Frame):
         self.master.title("pyptopad")
 
     def btnPpdbClicked(self):
-        file = tk.filedialog.askopenfilename(filetypes=(("pyptopad dbs",
-                                "*.ppdb"), ("all files", "*.*")))
+        file = filedialog.askopenfilename(filetypes=(("pyptopad db", "*.ppdb"),
+                                                     ("all files", "*.*")))
         # Doesn't allow to leave with empty path
         if file:
             self.ppdbPath.set(file)
@@ -71,7 +73,7 @@ class LoginFrame(tk.Frame):
         try:
             c.open(self.ppdbPath.get())
         except FileNotFoundError:
-            tk.messagebox.showerror("", "No such file.")
+            messagebox.showerror("", "No such file.")
             return
         self.changeState("disabled")
         try:
@@ -82,10 +84,10 @@ class LoginFrame(tk.Frame):
                                               crypt=c))
             return
         except exceptions.CryptoError:
-            tk.messagebox.showerror("", "Wrong password.")
+            messagebox.showerror("", "Wrong password.")
         except Exception as exc:
             print(exc)
-            tk.messagebox.showerror("", "Unexpected error. Check console.")
+            messagebox.showerror("", "Unexpected error. Check console.")
         c.close()
         self.changeState("normal")
 
