@@ -36,11 +36,11 @@ msgstr "Режим безопасности:"
 
 #: CreatePpdbFrame.py:93
 msgid "Run benchmark to see how long decryption will"
-msgstr "Запустите бенчмарк, чтоб узнать сколько времени"
+msgstr "Запустите бенчмарк, чтобы узнать, сколько времени"
 
 #: CreatePpdbFrame.py:95
 msgid "take on your device in each security mode."
-msgstr "займёт расшифровка для каждого режима на вашем устройстве."
+msgstr "займёт расшифрование на вашем устройстве."
 
 #: CreatePpdbFrame.py:103 PpdbFrame.py:125 PpdbFrame.py:155 PpdbFrame.py:210
 msgid "Cancel"
@@ -48,7 +48,7 @@ msgstr "Отмена"
 
 #: CreatePpdbFrame.py:108 CreatePpdbFrame.py:219
 msgid "Run benchmark"
-msgstr "Запустить бенчмарк"
+msgstr "Бенчмарк"
 
 #: CreatePpdbFrame.py:113
 msgid "Create"
@@ -76,15 +76,15 @@ msgstr "Неверный путь к файлу."
 
 #: CreatePpdbFrame.py:161
 msgid "Nothing to Hide"
-msgstr ""
+msgstr "Нечегоскрывать"
 
 #: CreatePpdbFrame.py:162
 msgid "I put perfomance above security."
-msgstr "Мне важнее производительность, а не безопасность."
+msgstr "Для меня скорость важнее безопасности."
 
 #: CreatePpdbFrame.py:163
 msgid "In this mode decryption is quickest,"
-msgstr "В этом режиме самая быстрая расшифровка,"
+msgstr "В этом режиме расшифрование будет быстрее всего,"
 
 #: CreatePpdbFrame.py:164
 msgid "but you better use a strong password."
@@ -92,43 +92,43 @@ msgstr "но Вам лучше использовать сильный паро�
 
 #: CreatePpdbFrame.py:168
 msgid "Standard"
-msgstr ""
+msgstr "Стандарт"
 
 #: CreatePpdbFrame.py:169
 msgid "Decrypion takes a little bit longer in this mode,"
-msgstr "Расшифровка в этом режиме займёт немного больше времени,"
+msgstr "Расшифрование в этом режиме займёт немного больше времени,"
 
 #: CreatePpdbFrame.py:171
 msgid "which makes brute-force attacks harder."
-msgstr "что делает брут-форс атаки более сложными."
+msgstr "что усложнит брутфорс атаки."
 
 #: CreatePpdbFrame.py:175
 msgid "Paranoia"
-msgstr ""
+msgstr "Паранойя"
 
 #: CreatePpdbFrame.py:176
 msgid "Just because you're paranoid,"
-msgstr "Только потому что Вы параноик"
+msgstr "То, что Вы — параноик,"
 
 #: CreatePpdbFrame.py:177
 msgid "doesn't mean they're not watching you."
-msgstr "не значит, что они не следят за Вами."
+msgstr "не означает, что за Вами не следят."
 
 #: CreatePpdbFrame.py:181
 msgid "On this device decryption is going to take:"
-msgstr "На данном устройстве расшифровка займёт:"
+msgstr "На данном устройстве расшифрование займёт:"
 
 #: CreatePpdbFrame.py:184
 msgid "s with Nothing to Hide Security Mode"
-msgstr "с в режиме Nothing to Hide"
+msgstr "с в режиме Нечегоскрывать"
 
 #: CreatePpdbFrame.py:186
 msgid "s with Standard Security Mode"
-msgstr "с в режиме Standard"
+msgstr "с в режиме Стандарт"
 
 #: CreatePpdbFrame.py:188
 msgid "s with Paranoia Security Mode"
-msgstr "с в режиме Paranoia"
+msgstr "с в режиме Паранойя"
 
 #: CreatePpdbFrame.py:208
 msgid "Running..."
@@ -152,19 +152,19 @@ msgstr "Такого файла не существует."
 
 #: LoginFrame.py:94
 msgid "Decryption error"
-msgstr "Ошибка расшифровки"
+msgstr "Ошибка расшифрования"
 
 #: LoginFrame.py:95
-msgid "Wrong password or"
-msgstr "Неправильный пароль или"
+msgid "Wrong password or "
+msgstr "Пароль неверен или "
 
 #: LoginFrame.py:96
 msgid "corrupted database."
-msgstr "искажённая база данных."
+msgstr "база данных повреждена"
 
 #: LoginFrame.py:100
 msgid "Unexpected error. Check console."
-msgstr "Непредвиденная ошибка. Смотрите в консоль."
+msgstr "Непредвиденная ошибка. Проверьте консоль."
 
 #: PpdbFrame.py:59
 msgid "Close"
@@ -208,7 +208,7 @@ msgstr "потеряны навсегда."
 
 #: PpdbFrame.py:149 PpdbFrame.py:204
 msgid "Save & Close"
-msgstr "Сохранить и выйти"
+msgstr "Сохранить и закрыть"
 
 #: PpdbFrame.py:152 PpdbFrame.py:207
 msgid "Close w/o saving"
