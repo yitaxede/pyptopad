@@ -165,9 +165,9 @@ class Cryptor:
         ----------
         file_name :  str
         password : str or bytes
-        sec_mode=1 : str '0', '1', '2' or int 0, 1, 2
-
-
+        sec_mode=1 : str or int
+            The desirable security mode.
+            Must be str '0', '1', '2' or int 0, 1, 2
         """
         if (sec_mode == '0' or sec_mode == 0):
             self.SEC_MODE = '0'
