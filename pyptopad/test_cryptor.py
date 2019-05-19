@@ -39,6 +39,23 @@ class TestSum(unittest.TestCase):
         self.assertLess(time0, time1)
         self.assertLess(time1, time2)
 
+    def test_db(self):
+        path = "/tmp/db.ppdb"
+        pwd = "p@s$w0Rd"
+        sec_mode = '1'
+        string = "Some very secret string."
+        
+        cr = Cryptor()
+        cr.create(path, pwd, sec_mode)
+        cr.write(string)
+        cr.close()
+
+        c = Cryptor()
+        c.open(path)
+        plaintext = c.read(pwd)
+        c.close()
+        self.assertEqual(plaintext, string)
+
 
 if __name__ == '__main__':
     unittest.main()
