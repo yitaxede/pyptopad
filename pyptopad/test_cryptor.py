@@ -12,17 +12,17 @@ class TestSum(unittest.TestCase):
         ciphertext = (cr.encrypt(self.plaintext))
         self.assertNotEqual(ciphertext, self.plaintext)
         self.assertEqual(cr.decrypt(ciphertext), self.plaintext)
-    
+
     def test_to_bytes(self):
         cr = Cryptor()
         self.assertEqual(cr.to_bytes('some string'), b'some string')
         self.assertEqual(cr.to_bytes(b'some string'), b'some string')
-    
+
     def test_to_str(self):
         cr = Cryptor()
         self.assertEqual(cr.to_str(b'some bytes'), 'some bytes')
         self.assertEqual(cr.to_str('some bytes'), 'some bytes')
-    
+
     def test_crypt(self):
         cr = Cryptor()
         cr.SEC_MODE = '0'
@@ -31,7 +31,7 @@ class TestSum(unittest.TestCase):
         ciphertext = (cr.encrypt(self.plaintext))
         self.assertNotEqual(ciphertext, self.plaintext)
         self.assertEqual(cr.decrypt(ciphertext), self.plaintext)
-        
+
     def test_benchmark(self):
         time0 = benchmark(0)
         time1 = benchmark(1)
@@ -44,7 +44,7 @@ class TestSum(unittest.TestCase):
         pwd = "p@s$w0Rd"
         sec_mode = '1'
         string = "Some very secret string."
-        
+
         cr = Cryptor()
         cr.create(path, pwd, sec_mode)
         cr.write(string)
