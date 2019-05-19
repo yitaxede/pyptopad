@@ -20,7 +20,7 @@ class CreatePpdbFrame(tk.Frame):
         lblPpdb.grid(row=0, column=0, sticky=tk.W)
 
         self.ppdbPath = tk.StringVar()
-        self.ppdbPath.set(os.getcwd() + '/')
+        self.ppdbPath.set(os.path.expanduser("~") + '/')
         self.entPpdb = tk.Entry(self, textvariable=self.ppdbPath,
                                 font=FONT, width=30)
         self.entPpdb.grid(row=1, column=0, columnspan=3,
@@ -91,7 +91,7 @@ class CreatePpdbFrame(tk.Frame):
 
         self.benchTxt = tk.StringVar()
         self.benchTxt.set("""Run benchmark to see how long decryption
-will take on your device in each security mode.""")
+will take on your device in each security mode.\n\n""")
 
         lblBench = tk.Label(self, font=SFONT, textvariable=self.benchTxt,
                             anchor=tk.W, justify=tk.LEFT,
@@ -103,7 +103,7 @@ will take on your device in each security mode.""")
                                    anchor=tk.W)
         self.btnCancel.grid(row=11, column=0, sticky=tk.W)
 
-        self.btnBench = tk.Button(self, text="Benchmark", font=FONT,
+        self.btnBench = tk.Button(self, text="Run benchmark", font=FONT,
                                   command=self.benchmark,
                                   anchor=tk.E)
         self.btnBench.grid(row=11, column=2, sticky=tk.E)
@@ -121,7 +121,8 @@ will take on your device in each security mode.""")
         self.master.title("Creating Database - pyptopad")
 
     def btnPpdbClicked(self):
-        file = tk.filedialog.asksaveasfilename(filetypes=(("pyptopad dbs",
+        file = tk.filedialog.asksaveasfilename(initialdir=os.path.expanduser("~"),
+                                               filetypes=(("pyptopad database",
                                                            "*.ppdb"),
                                                           ("all files",
                                                            "*.*")))
@@ -131,6 +132,8 @@ will take on your device in each security mode.""")
     def btnCreateClicked(self, *args):
         if self.userPass1.get() != self.userPass2.get():
             tk.messagebox.showerror("", "Passwords don't match.")
+            self.userPass1.set("")
+            self.userPass2.set("")
             return
         c = cr.Cryptor()
         self.changeState("disabled")
@@ -159,13 +162,13 @@ will take on your device in each security mode.""")
             self.lblSecMode["fg"] = "dark goldenrod"
             self.secModeStr.set("Standard")
             descr = "Decrypion takes a little bit longer in this mode,\n" \
-                    "which makes brute-force attacks harder."
+                    "which makes brute-force attacks harder.\n"
             self.secModeDescr.set(descr)
         elif mode == '2':
             self.lblSecMode["fg"] = "red"
             self.secModeStr.set("Paranoia")
             descr = "Just because you're paranoid,\n" \
-                    "doesn't mean they're not watching you."
+                    "doesn't mean they're not watching you.\n"
             self.secModeDescr.set(descr)
 
     def refreshBench(self):
@@ -178,6 +181,8 @@ will take on your device in each security mode.""")
                           + "s with Paranoia Security Mode")
 
     def changeState(self, state):
+        self.master.update()
+        self.master.update_idletasks()
         self.entPpdb["state"] = state
         self.btnPpdb["state"] = state
         self.entPass1["state"] = state
@@ -186,9 +191,14 @@ will take on your device in each security mode.""")
         self.btnBench["state"] = state
         self.btnCreate["state"] = state
         self.sclSec["state"] = state
+        self.master.update()
         self.master.update_idletasks()
 
     def benchmark(self, *args):
+        self.benchResult[0].set("...")
+        self.benchResult[1].set("...")
+        self.benchResult[2].set("...")
+        self.btnBench["text"] = "Running..."
         self.refreshBench()
         self.changeState("disabled")
         self.benchResult[0].set(str(round(cr.benchmark(0), 2)))
@@ -199,6 +209,7 @@ will take on your device in each security mode.""")
         self.master.update_idletasks()
         self.benchResult[2].set(str(round(cr.benchmark(2), 2)))
         self.refreshBench()
+        self.btnBench["text"] = "Run benchmark"
         self.changeState("normal")
 
     def closeWindow(self):
