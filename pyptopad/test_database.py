@@ -4,7 +4,7 @@ import xml.etree.ElementTree as ET
 from database import Database, Note, Text
 
 
-class TestSum(unittest.TestCase):
+class TestDB(unittest.TestCase):
     def test_text(self):
         s = b'<text color="red">Dear Jane, </text>'
         xml = ET.fromstring(s)

@@ -3,7 +3,7 @@ import unittest
 from cryptor import GOST_Cryptor, Cryptor, benchmark
 
 
-class TestSum(unittest.TestCase):
+class TestCryptor(unittest.TestCase):
     key = b'8899aabbccddeeff0011223344556677fedcba98765432100123456789abcdef'
     plaintext = b'1122334455667700ffeeddccbbaa9988'
     def test_gost(self):
