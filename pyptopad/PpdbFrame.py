@@ -68,7 +68,8 @@ class PpdbFrame(tk.Frame):
 
         self.lbNotes.select_set(0)
         if self.ddb.Notes:
-            self.txtText.insert(tk.END, self.ddb.Notes[0].Texts[0].content)
+            if self.ddb.Notes[0].Texts[0].content:
+                self.txtText.insert(tk.END, self.ddb.Notes[0].Texts[0].content)
 
         self.modified = False
         self.btnSave["state"] = "disabled"
@@ -80,7 +81,7 @@ class PpdbFrame(tk.Frame):
         self.master.title(file.split('/')[-1] + " - pyptopad")
 
     def textModified(self, event):
-        if event.state != 0 or event.char == "":
+        if event.state != 0 or event.char == "" or not self.ddb.Notes:
             return
         self.modified = True
         self.btnSave["state"] = "normal"
@@ -95,13 +96,13 @@ class PpdbFrame(tk.Frame):
         self.changeState("normal")
 
     def btnAddClicked(self):
-        window = tk.Toplevel(self.master)
-        window.geometry("350x100+" + str(self.master.winfo_x() +
+        self.window = tk.Toplevel(self.master)
+        self.window.geometry("350x100+" + str(self.master.winfo_x() +
                                               int(self.master.winfo_width() / 2) -
                                               175) +
                              '+' + str(self.master.winfo_y() +
                                        int(self.master.winfo_height() / 2) - 50))
-        subFrame = tk.Frame(window)
+        subFrame = tk.Frame(self.window)
         lblEntry = tk.Label(subFrame, text="Enter the title for a new note:",
                             font=FONT, anchor=tk.W)
         lblEntry.grid(row=0, columnspan=2, sticky=tk.W+tk.E)
@@ -118,7 +119,7 @@ class PpdbFrame(tk.Frame):
                           command=self.window.destroy)
         butt2.grid(row=2, column=1)
         subFrame.pack(padx=10, pady=10, expand=True)
-        window.title("New note - " + self.master.title())
+        self.window.title("New note - " + self.master.title())
 
     def btnCloseClicked(self):
         if self.modified:
@@ -211,6 +212,9 @@ class PpdbFrame(tk.Frame):
             self.ddb.Notes[-1].Texts.append(db.Text())
             self.ddb.Notes[-1].Texts[0].content = ""
             self.refreshNotes()
+            self.modified = True
+            self.btnSave["state"] = "normal"
+            self.master.update_idletasks()
             self.window.destroy()
 
     def changeNote(self, *args):
@@ -220,7 +224,8 @@ class PpdbFrame(tk.Frame):
         self.curr = self.lbNotes.curselection()[0]
         self.txtText.delete("1.0", tk.END)
         for x in self.ddb.Notes[self.curr].Texts:
-            self.txtText.insert("1.0", x.content)
+            if x.content:
+                self.txtText.insert("1.0", x.content)
 
     def changeState(self, state):
         self.lbNotes["state"] = state

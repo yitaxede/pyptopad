@@ -128,6 +128,8 @@ will take on your device in each security mode.\n\n""")
                                                            "*.*")))
         if file:
             self.ppdbPath.set(file)
+            self.entPpdb.icursor(tk.END)
+            self.entPpdb.xview_moveto(1.0)
 
     def btnCreateClicked(self, *args):
         if self.userPass1.get() != self.userPass2.get():
