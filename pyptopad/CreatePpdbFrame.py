@@ -159,25 +159,27 @@ class CreatePpdbFrame(tk.Frame):
         if mode == '0':
             self.lblSecMode['fg'] = 'green'
             self.secModeStr.set(_("Nothing to Hide"))
-            descr = _("I put perfomance above security.") + '\n' \
-                    +  _("In this mode decryption is quickest,") + '\n' \
-                    + _("but you better use a strong password.")
+            descr = _("I put perfomance above security.") + '\n' + \
+                    _("In this mode decryption is quickest,") + '\n' + \
+                    _("but you better use a strong password.")
             self.secModeDescr.set(descr)
         elif mode == '1':
             self.lblSecMode['fg'] = 'dark goldenrod'
             self.secModeStr.set(_("Standard"))
-            descr = _("Decrypion takes a little bit longer in this mode,") + '\n' \
-                    +  _("which makes brute-force attacks harder.") + '\n'
+            descr = _("Decrypion takes a little bit longer in this mode,") + \
+                    '\n' + \
+                    _("which makes brute-force attacks harder.") + '\n'
             self.secModeDescr.set(descr)
         elif mode == '2':
             self.lblSecMode['fg'] = 'red'
             self.secModeStr.set(_("Paranoia"))
-            descr = _("Just because you're paranoid,") + '\n' \
-                    + _("doesn't mean they're not watching you.") + '\n'
+            descr = _("Just because you're paranoid,") + '\n' + \
+                    _("doesn't mean they're not watching you.") + '\n'
             self.secModeDescr.set(descr)
 
     def refreshBench(self):
-        self.benchTxt.set(_("On this device decryption is going to take:") + '\n'
+        self.benchTxt.set(_("On this device decryption is going to take:")
+                          + '\n'
                           + self.benchResult[0].get()
                           + _("s with Nothing to Hide Security Mode") + '\n'
                           + self.benchResult[1].get()

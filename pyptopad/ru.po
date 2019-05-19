@@ -6,15 +6,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2019-05-19 18:58+MSK\n"
+"POT-Creation-Date: 2019-05-19 19:35+MSK\n"
 "PO-Revision-Date: 2019-05-19 19:03+0300\n"
 "Last-Translator: Ilya <ilya.babkin1@mail.ru>\n"
 "Language-Team: Russian\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"Language: ru\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
@@ -42,11 +42,11 @@ msgstr "Запустите бенчмарк, чтоб узнать скольк�
 msgid "take on your device in each security mode."
 msgstr "займёт расшифровка для каждого режима на вашем устройстве."
 
-#: CreatePpdbFrame.py:103 PpdbFrame.py:124 PpdbFrame.py:154 PpdbFrame.py:209
+#: CreatePpdbFrame.py:103 PpdbFrame.py:125 PpdbFrame.py:155 PpdbFrame.py:210
 msgid "Cancel"
 msgstr "Отмена"
 
-#: CreatePpdbFrame.py:108 CreatePpdbFrame.py:217
+#: CreatePpdbFrame.py:108 CreatePpdbFrame.py:219
 msgid "Run benchmark"
 msgstr "Запустить бенчмарк"
 
@@ -62,7 +62,7 @@ msgstr "Создание базы данных"
 msgid "pyptopad database"
 msgstr "база данных pyptopad"
 
-#: CreatePpdbFrame.py:130 LoginFrame.py:72
+#: CreatePpdbFrame.py:130 LoginFrame.py:73
 msgid "all files"
 msgstr "все файлы"
 
@@ -76,7 +76,7 @@ msgstr "Неверный путь к файлу."
 
 #: CreatePpdbFrame.py:161
 msgid "Nothing to Hide"
-msgstr "Мне Нечего Скрывать"
+msgstr ""
 
 #: CreatePpdbFrame.py:162
 msgid "I put perfomance above security."
@@ -92,45 +92,45 @@ msgstr "но Вам лучше использовать сильный паро�
 
 #: CreatePpdbFrame.py:168
 msgid "Standard"
-msgstr "Стандартный"
+msgstr ""
 
 #: CreatePpdbFrame.py:169
 msgid "Decrypion takes a little bit longer in this mode,"
 msgstr "Расшифровка в этом режиме займёт немного больше времени,"
 
-#: CreatePpdbFrame.py:170
+#: CreatePpdbFrame.py:171
 msgid "which makes brute-force attacks harder."
 msgstr "что делает брут-форс атаки более сложными."
 
-#: CreatePpdbFrame.py:174
-msgid "Paranoia"
-msgstr "Паранойя"
-
 #: CreatePpdbFrame.py:175
+msgid "Paranoia"
+msgstr ""
+
+#: CreatePpdbFrame.py:176
 msgid "Just because you're paranoid,"
 msgstr "Только потому что Вы параноик"
 
-#: CreatePpdbFrame.py:176
+#: CreatePpdbFrame.py:177
 msgid "doesn't mean they're not watching you."
 msgstr "не значит, что они не следят за Вами."
 
-#: CreatePpdbFrame.py:180
+#: CreatePpdbFrame.py:181
 msgid "On this device decryption is going to take:"
 msgstr "На данном устройстве расшифровка займёт:"
 
-#: CreatePpdbFrame.py:182
-msgid "s with Nothing to Hide Security Mode"
-msgstr "с в режиме Мне Нечего Скрывать"
-
 #: CreatePpdbFrame.py:184
-msgid "s with Standard Security Mode"
-msgstr "с в режиме Стандартный"
+msgid "s with Nothing to Hide Security Mode"
+msgstr "с в режиме Nothing to Hide"
 
 #: CreatePpdbFrame.py:186
-msgid "s with Paranoia Security Mode"
-msgstr "с в режиме Паранойя"
+msgid "s with Standard Security Mode"
+msgstr "с в режиме Standard"
 
-#: CreatePpdbFrame.py:206
+#: CreatePpdbFrame.py:188
+msgid "s with Paranoia Security Mode"
+msgstr "с в режиме Paranoia"
+
+#: CreatePpdbFrame.py:208
 msgid "Running..."
 msgstr "В процессе..."
 
@@ -146,23 +146,23 @@ msgstr "Открыть"
 msgid "New database"
 msgstr "Новая база данных"
 
-#: LoginFrame.py:82
+#: LoginFrame.py:83
 msgid "No such file."
 msgstr "Такого файла не существует."
 
-#: LoginFrame.py:93
+#: LoginFrame.py:94
 msgid "Decryption error"
 msgstr "Ошибка расшифровки"
 
-#: LoginFrame.py:93
+#: LoginFrame.py:95
 msgid "Wrong password or"
 msgstr "Неправильный пароль или"
 
-#: LoginFrame.py:94
+#: LoginFrame.py:96
 msgid "corrupted database."
 msgstr "искажённая база данных."
 
-#: LoginFrame.py:98
+#: LoginFrame.py:100
 msgid "Unexpected error. Check console."
 msgstr "Непредвиденная ошибка. Смотрите в консоль."
 
@@ -174,23 +174,23 @@ msgstr "Закрыть"
 msgid "Save"
 msgstr "Сохранить"
 
-#: PpdbFrame.py:112
+#: PpdbFrame.py:113
 msgid "Enter the title for a new note:"
 msgstr "Введите название для новой заметки:"
 
-#: PpdbFrame.py:121
+#: PpdbFrame.py:122
 msgid "Add"
 msgstr "Добавить"
 
-#: PpdbFrame.py:128
+#: PpdbFrame.py:129
 msgid "New note - "
 msgstr "Новая заметка - "
 
-#: PpdbFrame.py:142 PpdbFrame.py:198
+#: PpdbFrame.py:143 PpdbFrame.py:199
 msgid "Do you want to save changes"
 msgstr "Вы хотите сохранить изменения"
 
-#: PpdbFrame.py:143
+#: PpdbFrame.py:144
 msgid ""
 "before returning to login window?\n"
 "If you"
@@ -198,27 +198,27 @@ msgstr ""
 "перед возвращением в окно входа?\n"
 "Если Вы"
 
-#: PpdbFrame.py:144
+#: PpdbFrame.py:145
 msgid "don't save, changes will be"
 msgstr " не сохраните их, изменения будут"
 
-#: PpdbFrame.py:145
+#: PpdbFrame.py:146
 msgid "permanently lost."
 msgstr "потеряны навсегда."
 
-#: PpdbFrame.py:148 PpdbFrame.py:203
+#: PpdbFrame.py:149 PpdbFrame.py:204
 msgid "Save & Close"
 msgstr "Сохранить и выйти"
 
-#: PpdbFrame.py:151 PpdbFrame.py:206
+#: PpdbFrame.py:152 PpdbFrame.py:207
 msgid "Close w/o saving"
 msgstr "Выйти без сохранения"
 
-#: PpdbFrame.py:159 PpdbFrame.py:213
+#: PpdbFrame.py:160 PpdbFrame.py:214
 msgid "Save changes? - "
 msgstr "Сохранить изменения? - "
 
-#: PpdbFrame.py:199
+#: PpdbFrame.py:200
 msgid ""
 "before closing?\n"
 "If you don't save, changes"
@@ -226,6 +226,6 @@ msgstr ""
 "перед закрытием?\n"
 "Если вы не сохраните их, изменения"
 
-#: PpdbFrame.py:200
+#: PpdbFrame.py:201
 msgid "will be permanently lost."
 msgstr "будут потеряны навсегда"

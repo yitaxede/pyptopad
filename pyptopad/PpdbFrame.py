@@ -109,7 +109,8 @@ class PpdbFrame(tk.Frame):
                              str(self.master.winfo_y() +
                                  int(self.master.winfo_height() / 2) - 50))
         subFrame = tk.Frame(self.window)
-        lblEntry = tk.Label(subFrame, text=_("Enter the title for a new note:"),
+        lblEntry = tk.Label(subFrame,
+                            text=_("Enter the title for a new note:"),
                             font=FONT, anchor=tk.W)
         lblEntry.grid(row=0, columnspan=2, sticky=tk.W+tk.E)
         self.text = tk.StringVar()

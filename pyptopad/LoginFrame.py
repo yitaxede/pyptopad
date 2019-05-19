@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
 import os
-import sys  
+import sys
 
 import gettext
 
@@ -68,7 +68,8 @@ class LoginFrame(tk.Frame):
         self.master.title('pyptopad')
 
     def btnPpdbClicked(self):
-        file = filedialog.askopenfilename(filetypes=((_("pyptopad database"), '*.ppdb'),
+        file = filedialog.askopenfilename(filetypes=((_("pyptopad database"),
+                                                      '*.ppdb'),
                                                      (_("all files"), '*.*')))
         # Doesn't allow to leave with empty path
         if file:
@@ -90,7 +91,8 @@ class LoginFrame(tk.Frame):
                                               crypt=c))
             return
         except exceptions.CryptoError:
-            messagebox.showerror(_("Decryption error"), _("Wrong password or") +
+            messagebox.showerror(_("Decryption error"),
+                                 _("Wrong password or") +
                                  _("corrupted database."))
             self.userPass.set('')
         except Exception as exc:
