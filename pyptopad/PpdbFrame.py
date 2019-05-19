@@ -1,11 +1,16 @@
 import tkinter as tk
 import xml.etree.ElementTree as ET
+import gettext
+import os
+import sys
 
 import LoginFrame as lf
 
 import database as db
 
 FONT = ('DejaVu Sans Mono Bold', 12)
+
+gettext.install('pyptopad', os.path.dirname(sys.argv[0]))
 
 
 class PpdbFrame(tk.Frame):
@@ -51,12 +56,12 @@ class PpdbFrame(tk.Frame):
                     sticky=tk.E+tk.W+tk.S+tk.N)
         # END of Text & Scrollbar
 
-        self.btnClose = tk.Button(self, text="Close", font=FONT,
+        self.btnClose = tk.Button(self, text=_("Close"), font=FONT,
                                   command=self.btnCloseClicked,
                                   anchor=tk.W)
         self.btnClose.grid(row=1, column=0)
 
-        self.btnSave = tk.Button(self, text="Save", font=FONT,
+        self.btnSave = tk.Button(self, text=_("Save"), font=FONT,
                                  command=self.btnSaveClicked,
                                  anchor=tk.E)
         self.btnSave.grid(row=1, column=1)
@@ -104,7 +109,7 @@ class PpdbFrame(tk.Frame):
                              str(self.master.winfo_y() +
                                  int(self.master.winfo_height() / 2) - 50))
         subFrame = tk.Frame(self.window)
-        lblEntry = tk.Label(subFrame, text="Enter the title for a new note:",
+        lblEntry = tk.Label(subFrame, text=_("Enter the title for a new note:"),
                             font=FONT, anchor=tk.W)
         lblEntry.grid(row=0, columnspan=2, sticky=tk.W+tk.E)
         self.text = tk.StringVar()
@@ -113,14 +118,14 @@ class PpdbFrame(tk.Frame):
         entry.bind('<Return>', self.checkAdd)
         entry.grid(row=1, columnspan=2, sticky=tk.W+tk.E)
         entry.focus_set()
-        butt1 = tk.Button(subFrame, text="Add", font=FONT,
+        butt1 = tk.Button(subFrame, text=_("Add"), font=FONT,
                           command=self.checkAdd, anchor=tk.E)
         butt1.grid(row=2, column=0)
-        butt2 = tk.Button(subFrame, text="Cancel", font=FONT,
+        butt2 = tk.Button(subFrame, text=_("Cancel"), font=FONT,
                           command=self.window.destroy)
         butt2.grid(row=2, column=1)
         subFrame.pack(padx=10, pady=10, expand=True)
-        self.window.title("New note - " + self.master.title())
+        self.window.title(_("New note - ") + self.master.title())
 
     def btnCloseClicked(self):
         if self.modified:
@@ -134,24 +139,24 @@ class PpdbFrame(tk.Frame):
                                      int(self.master.winfo_height() / 2) -
                                      75))
             subFrame = tk.Frame(self.window)
-            label = tk.Label(subFrame, text="Do you want to save changes" +
-                             "before returning to login window?\nIf you" +
-                             "don't save, changes will be" +
-                             "permanently lost.",
+            label = tk.Label(subFrame, text=_("Do you want to save changes") +
+                             _("before returning to login window?\nIf you") +
+                             _("don't save, changes will be") +
+                             _("permanently lost."),
                              font=FONT, justify=tk.LEFT)
             label.grid(row=0, columnspan=3)
-            butt1 = tk.Button(subFrame, text="Save & Close", font=FONT,
+            butt1 = tk.Button(subFrame, text=_("Save & Close"), font=FONT,
                               command=self.subFunc12)
             butt1.grid(row=1, column=0)
-            butt2 = tk.Button(subFrame, text="Close w/o saving", font=FONT,
+            butt2 = tk.Button(subFrame, text=_("Close w/o saving"), font=FONT,
                               command=self.subFunc22)
             butt2.grid(row=1, column=1)
-            butt3 = tk.Button(subFrame, text="Cancel", font=FONT,
+            butt3 = tk.Button(subFrame, text=_("Cancel"), font=FONT,
                               command=lambda f:
                               self.master.setFrame(lf.LoginFrame(self.master)))
             butt3.grid(row=1, column=2)
             subFrame.pack(padx=10, pady=10, expand=True)
-            self.window.title("Save changes? - " + self.master.title())
+            self.window.title(_("Save changes? - ") + self.master.title())
         else:
             self.crypt.close()
             self.master.setFrame(lf.LoginFrame(self.master))
@@ -190,22 +195,22 @@ class PpdbFrame(tk.Frame):
                                      int(self.master.winfo_height() / 2) -
                                      75))
             subFrame = tk.Frame(self.window)
-            label = tk.Label(subFrame, text="Do you want to save changes" +
-                             "before closing?\nIf you don't save, changes" +
-                             "will be permanently lost.",
+            label = tk.Label(subFrame, text=_("Do you want to save changes") +
+                             _("before closing?\nIf you don't save, changes") +
+                             _("will be permanently lost."),
                              font=FONT, justify=tk.LEFT)
             label.grid(row=0, columnspan=3)
-            butt1 = tk.Button(subFrame, text="Save & Close", font=FONT,
+            butt1 = tk.Button(subFrame, text=_("Save & Close"), font=FONT,
                               command=self.subFunc1)
             butt1.grid(row=1, column=0)
-            butt2 = tk.Button(subFrame, text="Close w/o saving", font=FONT,
+            butt2 = tk.Button(subFrame, text=_("Close w/o saving"), font=FONT,
                               command=self.subFunc2)
             butt2.grid(row=1, column=1)
-            butt3 = tk.Button(subFrame, text="Cancel", font=FONT,
+            butt3 = tk.Button(subFrame, text=_("Cancel"), font=FONT,
                               command=self.window.destroy)
             butt3.grid(row=1, column=2)
             subFrame.pack(padx=10, pady=10, expand=True)
-            self.window.title("Save changes? - " + self.master.title())
+            self.window.title(_("Save changes? - ") + self.master.title())
         else:
             self.crypt.close()
             self.master.destroy()

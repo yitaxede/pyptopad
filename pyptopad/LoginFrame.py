@@ -1,6 +1,10 @@
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
+import os
+import sys  
+
+import gettext
 
 import PpdbFrame as pf
 import CreatePpdbFrame as cpf
@@ -12,13 +16,15 @@ import database as db
 
 FONT = ('DejaVu Sans Mono Bold', 12)
 
+gettext.install('pyptopad', os.path.dirname(sys.argv[0]))
+
 
 class LoginFrame(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
         self.master = master
 
-        lblPpdb = tk.Label(self, text="Database:", font=FONT,
+        lblPpdb = tk.Label(self, text=_("Database:"), font=FONT,
                            anchor=tk.W)
         lblPpdb.grid(row=0, column=0, sticky=tk.W+tk.E)
 
@@ -31,12 +37,12 @@ class LoginFrame(tk.Frame):
         # Actually usable focus on entry
         self.entPpdb.focus_set()
 
-        self.btnPpdb = tk.Button(self, text="...", font=FONT,
+        self.btnPpdb = tk.Button(self, text='...', font=FONT,
                                  command=self.btnPpdbClicked,
                                  anchor=tk.E)
         self.btnPpdb.grid(row=1, column=1, sticky=tk.E, ipadx=1)
 
-        lblPass = tk.Label(self, text="Password:", font=FONT,
+        lblPass = tk.Label(self, text=_("Password:"), font=FONT,
                            anchor=tk.W)
         lblPass.grid(row=2, column=0, sticky=tk.W+tk.E)
 
@@ -46,12 +52,12 @@ class LoginFrame(tk.Frame):
         self.entPass.bind('<Return>', self.btnOpenClicked)
         self.entPass.grid(row=3, column=0, sticky=tk.W+tk.E+tk.S+tk.N)
 
-        self.btnOpen = tk.Button(self, text="Open", font=FONT,
+        self.btnOpen = tk.Button(self, text=_("Open"), font=FONT,
                                  command=self.btnOpenClicked,
                                  anchor=tk.E)
         self.btnOpen.grid(row=3, column=1, sticky=tk.E)
 
-        self.btnNew = tk.Button(self, text="New database", font=FONT,
+        self.btnNew = tk.Button(self, text=_("New database"), font=FONT,
                                 command=self.btnNewClicked)
         self.btnNew.grid(row=4, column=0, columnspan=2,
                          sticky=tk.W+tk.S, pady=20)
@@ -62,8 +68,8 @@ class LoginFrame(tk.Frame):
         self.master.title('pyptopad')
 
     def btnPpdbClicked(self):
-        file = filedialog.askopenfilename(filetypes=(("pyptopad database", '*.ppdb'),
-                                                     ("all files", '*.*')))
+        file = filedialog.askopenfilename(filetypes=((_("pyptopad database"), '*.ppdb'),
+                                                     (_("all files"), '*.*')))
         # Doesn't allow to leave with empty path
         if file:
             self.ppdbPath.set(file)
@@ -73,7 +79,7 @@ class LoginFrame(tk.Frame):
         try:
             c.open(self.ppdbPath.get())
         except FileNotFoundError:
-            messagebox.showerror('', "No such file.")
+            messagebox.showerror('', _("No such file."))
             return
         self.changeState('disabled')
         try:
@@ -84,12 +90,12 @@ class LoginFrame(tk.Frame):
                                               crypt=c))
             return
         except exceptions.CryptoError:
-            messagebox.showerror("Decryption error", "Wrong password or" +
-                                 "corrupted database.")
-            self.userPass.set("")
+            messagebox.showerror(_("Decryption error"), _("Wrong password or") +
+                                 _("corrupted database."))
+            self.userPass.set('')
         except Exception as exc:
             print(exc)
-            messagebox.showerror('', "Unexpected error. Check console.")
+            messagebox.showerror('', _("Unexpected error. Check console."))
         c.close()
         self.changeState('normal')
 
