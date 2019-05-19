@@ -41,8 +41,9 @@ class PpdbFrame(tk.Frame):
         self.scroll2 = tk.Scrollbar(frame2)
         self.scroll2.pack(side="right", fill="y")
 
-        self.txtText = tk.Text(frame2, font=FONT,
+        self.txtText = tk.Text(frame2, font=FONT, wrap=tk.WORD,
                                yscrollcommand=self.scroll2.set)
+        self.txtText.bind("<KeyRelease>", self.textModified)
         self.txtText.pack(side="left", fill="y")
 
         self.scroll2["command"] = self.txtText.yview
@@ -69,26 +70,38 @@ class PpdbFrame(tk.Frame):
         if self.ddb.Notes:
             self.txtText.insert(tk.END, self.ddb.Notes[0].Texts[0].content)
 
+        self.modified = False
+        self.btnSave["state"] = "disabled"
+
         self.pack(padx=10, pady=10, anchor=tk.CENTER, expand=True)
         # When the user decides to exit the app, the app offers the messagebox
         # The user needs to press 'Close' button to return to the LoginFrame
         self.master.protocol("WM_DELETE_WINDOW", self.rUSure)
         self.master.title(file.split('/')[-1] + " - pyptopad")
 
+    def textModified(self, event):
+        if event.state != 0 or event.char == "":
+            return
+        self.modified = True
+        self.btnSave["state"] = "normal"
+        self.master.update_idletasks()
+
     def btnSaveClicked(self):
         self.saveNote(self.curr)
         self.changeState("disabled")
         self.crypt.write(self.ddb.to_xml_string())
+        self.modified = False
+        self.btnSave["state"] = "disabled"
         self.changeState("normal")
 
     def btnAddClicked(self):
-        self.window = tk.Toplevel(self.master)
-        self.window.geometry("350x100+" + str(self.master.winfo_x() +
+        window = tk.Toplevel(self.master)
+        window.geometry("350x100+" + str(self.master.winfo_x() +
                                               int(self.master.winfo_width() / 2) -
                                               175) +
                              '+' + str(self.master.winfo_y() +
                                        int(self.master.winfo_height() / 2) - 50))
-        subFrame = tk.Frame(self.window)
+        subFrame = tk.Frame(window)
         lblEntry = tk.Label(subFrame, text="Enter the title for a new note:",
                             font=FONT, anchor=tk.W)
         lblEntry.grid(row=0, columnspan=2, sticky=tk.W+tk.E)
@@ -105,19 +118,81 @@ class PpdbFrame(tk.Frame):
                           command=self.window.destroy)
         butt2.grid(row=2, column=1)
         subFrame.pack(padx=10, pady=10, expand=True)
-        self.window.title("New note - " + self.master.title())
+        window.title("New note - " + self.master.title())
 
     def btnCloseClicked(self):
-        msgbox = tk.messagebox.askquestion("Return to login window",
-                                           "Are you sure you want to return?")
-        if msgbox == "yes":
+        if self.modified:
+            self.window = tk.Toplevel(self.master)
+            self.window.geometry("450x150+" + str(self.master.winfo_x() +
+                                              int(self.master.winfo_width() / 2) -
+                                              225) +
+                             '+' + str(self.master.winfo_y() +
+                                       int(self.master.winfo_height() / 2) - 75))
+            subFrame = tk.Frame(self.window)
+            label = tk.Label(subFrame, text="""Do you want to save changes before returning to login window?\nIf you don't save, changes will be permanently lost.""",
+                             font=FONT, justify=tk.LEFT)
+            label.grid(row=0, columnspan=3)
+            butt1 = tk.Button(subFrame, text="Save & Close", font=FONT,
+                              command=self.subFunc12)
+            butt1.grid(row=1, column=0)
+            butt2 = tk.Button(subFrame, text="Close w/o saving", font=FONT,
+                              command=self.subFunc22)
+            butt2.grid(row=1, column=1)
+            butt3 = tk.Button(subFrame, text="Cancel", font=FONT,
+                              command=lambda f: self.master.setFrame(lf.LoginFrame(self.master)))
+            butt3.grid(row=1, column=2)
+            subFrame.pack(padx=10, pady=10, expand=True)
+            self.window.title("Save changes? - " + self.master.title())
+        else:
             self.crypt.close()
             self.master.setFrame(lf.LoginFrame(self.master))
 
+    def subFunc1(self):
+        self.btnSaveClicked()
+        self.crypt.close()
+        self.window.destroy()
+        self.master.destroy()
+
+    def subFunc2(self):
+        self.crypt.close()
+        self.window.destroy()
+        self.master.destroy()
+
+    def subFunc12(self):
+        self.btnSaveClicked()
+        self.crypt.close()
+        self.window.destroy()
+        self.master.setFrame(lf.LoginFrame(self.master))
+
+    def subFunc22(self):
+        self.crypt.close()
+        self.window.destroy()
+        self.master.setFrame(lf.LoginFrame(self.master))
+
     def rUSure(self, *args):
-        msgbox = tk.messagebox.askquestion("Close pyptopad",
-                                           "Are you sure?")
-        if msgbox == "yes":
+        if self.modified:
+            self.window = tk.Toplevel(self.master)
+            self.window.geometry("450x150+" + str(self.master.winfo_x() +
+                                              int(self.master.winfo_width() / 2) -
+                                              225) +
+                             '+' + str(self.master.winfo_y() +
+                                       int(self.master.winfo_height() / 2) - 75))
+            subFrame = tk.Frame(self.window)
+            label = tk.Label(subFrame, text="""Do you want to save changes before closing?\nIf you don't save, changes will be permanently lost.""",
+                             font=FONT, justify=tk.LEFT)
+            label.grid(row=0, columnspan=3)
+            butt1 = tk.Button(subFrame, text="Save & Close", font=FONT,
+                              command=self.subFunc1)
+            butt1.grid(row=1, column=0)
+            butt2 = tk.Button(subFrame, text="Close w/o saving", font=FONT,
+                              command=self.subFunc2)
+            butt2.grid(row=1, column=1)
+            butt3 = tk.Button(subFrame, text="Cancel", font=FONT,
+                              command=self.window.destroy)
+            butt3.grid(row=1, column=2)
+            subFrame.pack(padx=10, pady=10, expand=True)
+            self.window.title("Save changes? - " + self.master.title())
+        else:
             self.crypt.close()
             self.master.destroy()
 
@@ -151,7 +226,8 @@ class PpdbFrame(tk.Frame):
         self.lbNotes["state"] = state
         self.txtText["state"] = state
         self.btnClose["state"] = state
-        self.btnSave["state"] = state
+        if self.modified:
+            self.btnSave["state"] = state
         self.btnAdd["state"] = state
         self.master.update_idletasks()
 
