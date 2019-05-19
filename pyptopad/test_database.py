@@ -3,24 +3,6 @@ import unittest
 import xml.etree.ElementTree as ET
 from database import Database, Note, Text
 
-string = """
-<database>
-    <note name='love letter to Jane'>
-        <text color='red'>Dear Jane, </text>
-        <text fontsize='16'>I LOVE YOU!</text>
-    </note>
-    <note name='love letter to Molly'>
-        <text color='blue'>Dear Molly, </text>
-        <text fontsize='22'>I LOVE YOU!</text>
-    </note>
-    <note name='2buy'>
-        <text>red roses</text>
-        <text>white wine</text>
-        <text>condoms</text>
-    </note>
-</database>
-"""
-
 
 class TestSum(unittest.TestCase):
     def test_text(self):
