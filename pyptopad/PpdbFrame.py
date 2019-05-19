@@ -97,11 +97,12 @@ class PpdbFrame(tk.Frame):
 
     def btnAddClicked(self):
         self.window = tk.Toplevel(self.master)
-        self.window.geometry("350x100+" + str(self.master.winfo_x() +
-                                              int(self.master.winfo_width() / 2) -
-                                              175) +
-                             '+' + str(self.master.winfo_y() +
-                                       int(self.master.winfo_height() / 2) - 50))
+        self.window.geometry("350x100+" +
+                             str(self.master.winfo_x() +
+                                 int(self.master.winfo_width() / 2) - 175) +
+                             '+' +
+                             str(self.master.winfo_y() +
+                                 int(self.master.winfo_height() / 2) - 50))
         subFrame = tk.Frame(self.window)
         lblEntry = tk.Label(subFrame, text="Enter the title for a new note:",
                             font=FONT, anchor=tk.W)
@@ -124,13 +125,19 @@ class PpdbFrame(tk.Frame):
     def btnCloseClicked(self):
         if self.modified:
             self.window = tk.Toplevel(self.master)
-            self.window.geometry("450x150+" + str(self.master.winfo_x() +
-                                              int(self.master.winfo_width() / 2) -
-                                              225) +
-                             '+' + str(self.master.winfo_y() +
-                                       int(self.master.winfo_height() / 2) - 75))
+            self.window.geometry("450x150+" +
+                                 str(self.master.winfo_x() +
+                                     int(self.master.winfo_width() / 2) -
+                                     225) +
+                                 '+' +
+                                 str(self.master.winfo_y() +
+                                     int(self.master.winfo_height() / 2) -
+                                     75))
             subFrame = tk.Frame(self.window)
-            label = tk.Label(subFrame, text="""Do you want to save changes before returning to login window?\nIf you don't save, changes will be permanently lost.""",
+            label = tk.Label(subFrame, text="Do you want to save changes" +
+                             "before returning to login window?\nIf you" +
+                             "don't save, changes will be" +
+                             "permanently lost.",
                              font=FONT, justify=tk.LEFT)
             label.grid(row=0, columnspan=3)
             butt1 = tk.Button(subFrame, text="Save & Close", font=FONT,
@@ -140,7 +147,8 @@ class PpdbFrame(tk.Frame):
                               command=self.subFunc22)
             butt2.grid(row=1, column=1)
             butt3 = tk.Button(subFrame, text="Cancel", font=FONT,
-                              command=lambda f: self.master.setFrame(lf.LoginFrame(self.master)))
+                              command=lambda f:
+                              self.master.setFrame(lf.LoginFrame(self.master)))
             butt3.grid(row=1, column=2)
             subFrame.pack(padx=10, pady=10, expand=True)
             self.window.title("Save changes? - " + self.master.title())
@@ -173,13 +181,18 @@ class PpdbFrame(tk.Frame):
     def rUSure(self, *args):
         if self.modified:
             self.window = tk.Toplevel(self.master)
-            self.window.geometry("450x150+" + str(self.master.winfo_x() +
-                                              int(self.master.winfo_width() / 2) -
-                                              225) +
-                             '+' + str(self.master.winfo_y() +
-                                       int(self.master.winfo_height() / 2) - 75))
+            self.window.geometry("450x150+" +
+                                 str(self.master.winfo_x() +
+                                     int(self.master.winfo_width() / 2) -
+                                     225) +
+                                 '+' +
+                                 str(self.master.winfo_y() +
+                                     int(self.master.winfo_height() / 2) -
+                                     75))
             subFrame = tk.Frame(self.window)
-            label = tk.Label(subFrame, text="""Do you want to save changes before closing?\nIf you don't save, changes will be permanently lost.""",
+            label = tk.Label(subFrame, text="Do you want to save changes" +
+                             "before closing?\nIf you don't save, changes" +
+                             "will be permanently lost.",
                              font=FONT, justify=tk.LEFT)
             label.grid(row=0, columnspan=3)
             butt1 = tk.Button(subFrame, text="Save & Close", font=FONT,

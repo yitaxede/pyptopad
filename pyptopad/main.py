@@ -9,11 +9,11 @@ class Window(tk.Tk):
         try:
             try:
                 self.tk.call("tk_getOpenFile", "-foobarbaz")
-            except:
+            except tk.TclError:
                 pass
             self.tk.call("set", "::tk::dialog::file::showHiddenVar", '0')
             self.tk.call("set", "::tk::dialog::file::showHiddenBtn", '0')
-        except:
+        except tk.TclError:
             pass
         # Now hidden files won't be shown
         self.frame = lf.LoginFrame(self)

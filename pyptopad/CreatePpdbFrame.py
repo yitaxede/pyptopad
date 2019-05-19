@@ -121,11 +121,12 @@ will take on your device in each security mode.\n\n""")
         self.master.title("Creating Database - pyptopad")
 
     def btnPpdbClicked(self):
-        file = tk.filedialog.asksaveasfilename(initialdir=os.path.expanduser("~"),
-                                               filetypes=(("pyptopad database",
-                                                           "*.ppdb"),
-                                                          ("all files",
-                                                           "*.*")))
+        file = tk.filedialog.asksaveasfilename(
+                                            initialdir=os.path.expanduser("~"),
+                                            filetypes=(("pyptopad database",
+                                                        "*.ppdb"),
+                                                       ("all files",
+                                                        "*.*")))
         if file:
             self.ppdbPath.set(file)
             self.entPpdb.icursor(tk.END)
