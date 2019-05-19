@@ -18,18 +18,65 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 class GOST_Cryptor:
     """
-    GOST 34.12-2015 128-bit block cipher Kuznechik
+    GOST 34.12-2015 128-bit block cipher Kuznechik in CFB mode
     """
     IV_SIZE = 32
 
     def __init__(self, key):
+        """
+        Initialize the cipher module with the key.
+
+        Parameters
+        ----------
+        key :  bytes
+        """
         self.ciph = GOST3412Kuznechik(key)
 
     def encrypt(self, plaintext):
+        """
+        Generate a random IV and encrypt the plaintext with the given key
+
+        Note that IV (initialization vector) must never be used twice.
+        From Wikipedia:
+
+            An initialization vector has different security requirements
+            than a key, so the IV usually does not need to be secret.
+            However, in most cases, it is important that an initialization
+            vector is never reused under the same key. For CBC and CFB,
+            reusing an IV leaks some information about the first block of
+            plaintext, and about any common prefix shared by the two messages.
+            For OFB and CTR, reusing an IV completely destroys security.
+
+        Parameters
+        ----------
+        plaintext :  bytes
+
+        Returns:
+        ----------
+        bytes :
+           The IV concatenated with the ciphertext
+        """
         iv = urandom(self.IV_SIZE)
         return iv + cfb_encrypt(self.ciph.encrypt, 16, plaintext, iv)
 
     def decrypt(self, ciphertext):
+        """
+        Decrypt the ciphertext with the given key
+
+        The IV must be in the first IV_SIZE bytes of the ciphertext.
+        This cipher does not authentificate anything,
+        so if the key is incorrect or the ciphertext is corrupted
+        you will get just a mess of bytes.
+
+        Parameters
+        ----------
+        ciphertext :  bytes
+
+        Returns:
+        ----------
+        bytes :
+           Decrypted plaintext
+        """
         return cfb_decrypt(self.ciph.encrypt, 16,
                            ciphertext[self.IV_SIZE:],
                            ciphertext[:self.IV_SIZE])
