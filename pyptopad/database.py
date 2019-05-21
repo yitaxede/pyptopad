@@ -1,10 +1,11 @@
 #!/usr/bin/python
 import xml.etree.ElementTree as ET
 
+
 class Database:
     """
     Database format example
-    
+
     <database>
         <note name='love letter to Jane'>
             <text color='red'>Dear Jane, </text>
@@ -20,7 +21,7 @@ class Database:
             <text>condoms</text>
         </note>
     </database>
-    
+
     Usage:
     >>> db = Database(db_string)
     >>> db.attributes
