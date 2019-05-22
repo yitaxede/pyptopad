@@ -32,7 +32,17 @@ class PpdbFrame(tk.Frame):
                                   yscrollcommand=self.scroll1.set)
         self.refreshNotes()
         self.lbNotes.bind('<<ListboxSelect>>', self.changeNote)
+        self.lbNotes.bind('<Button-3>', self.rmbClicked)
         self.lbNotes.pack(side='left', fill='y')
+
+        self.popup = tk.Menu(self, tearoff=0)
+        self.popup.add_command(label="Up", command=self.popupUp)
+        self.popup.add_command(label="Down", command=self.popupDown)
+        self.popup.add_separator()
+        self.popup.add_command(label="Rename", command=self.popupRename)
+        self.popup.add_command(label="Clone", command=self.popupClone)
+        self.popup.add_command(label="Delete", command=self.popupDelete)
+        self.popup.bind('<FocusOut>', lambda e: self.popup.unpost())
 
         self.scroll1['command'] = self.lbNotes.yview
 
@@ -161,6 +171,29 @@ class PpdbFrame(tk.Frame):
         else:
             self.crypt.close()
             self.master.setFrame(lf.LoginFrame(self.master))
+
+    def rmbClicked(self, event):
+        self.lbNotes.select_clear(0, tk.END)
+        self.lbNotes.select_set(self.lbNotes.nearest(event.y))
+        self.lbNotes.activate(self.lbNotes.nearest(event.y))
+        self.popup.focus_set()
+        self.changeNote()
+        self.popup.post(event.x_root, event.y_root)
+
+    def popupUp(self):
+        pass
+
+    def popupDown(self):
+        pass
+
+    def popupRename(self):
+        pass
+
+    def popupClone(self):
+        pass
+
+    def popupDelete(self):
+        pass
 
     def subFunc1(self):
         self.btnSaveClicked()
