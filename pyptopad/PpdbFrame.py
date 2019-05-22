@@ -264,6 +264,11 @@ class PpdbFrame(tk.Frame):
             self.ddb.Notes[-1].Texts.append(db.Text())
             self.ddb.Notes[-1].Texts[0].content = ''
             self.refreshNotes()
+            self.lbNotes.select_clear(0, tk.END)
+            self.lbNotes.select_set(tk.END)
+            self.lbNotes.activate(tk.END)
+            self.changeNote()
+            self.txtText.focus_set()
             self.modified = True
             self.btnSave['state'] = 'normal'
             self.master.update_idletasks()
