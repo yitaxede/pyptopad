@@ -59,6 +59,8 @@ class PpdbFrame(tk.Frame):
         self.txtText = tk.Text(frame2, font=FONT, wrap=tk.WORD,
                                yscrollcommand=self.scroll2.set)
         self.txtText.bind('<KeyRelease>', self.textModified)
+        self.txtText.bind("<Control-Key-a>", self.textSelectAll) 
+        self.txtText.bind("<Control-Key-A>", self.textSelectAll) 
         self.txtText.pack(side='left', fill='y')
 
         self.scroll2['command'] = self.txtText.yview
@@ -101,6 +103,12 @@ class PpdbFrame(tk.Frame):
         self.modified = True
         self.btnSave['state'] = 'normal'
         self.master.update_idletasks()
+
+    def textSelectAll(self, event):
+        self.txtText.tag_add(tk.SEL, '1.0', tk.END)
+        self.txtText.mark_set(tk.INSERT, '1.0')
+        self.txtText.see(tk.INSERT)
+        return 'break'
 
     def btnSaveClicked(self):
         self.saveNote(self.curr)
@@ -163,8 +171,7 @@ class PpdbFrame(tk.Frame):
                               command=self.subFunc22)
             butt2.grid(row=1, column=1)
             butt3 = tk.Button(subFrame, text=_("Cancel"), font=FONT,
-                              command=lambda f:
-                              self.master.setFrame(lf.LoginFrame(self.master)))
+                              command=self.window.destroy)
             butt3.grid(row=1, column=2)
             subFrame.pack(padx=10, pady=10, expand=True)
             self.window.title(_("Save changes? - ") + self.master.title())
