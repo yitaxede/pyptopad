@@ -188,10 +188,32 @@ class PpdbFrame(tk.Frame):
         self.popup.post(event.x_root, event.y_root)
 
     def popupUp(self):
-        pass
+        if self.curr == 0:
+            return
+        temp = self.ddb.Notes[self.curr]
+        self.ddb.Notes[self.curr] = self.ddb.Notes[self.curr - 1]
+        self.ddb.Notes[self.curr - 1] = temp
+        self.refreshNotes()
+        self.curr = self.curr - 1
+        self.lbNotes.select_clear(0, tk.END)
+        self.lbNotes.select_set(self.curr)
+        self.lbNotes.activate(self.curr)
+        self.modified = True
+        self.btnSave['state'] = 'normal'
 
     def popupDown(self):
-        pass
+        if self.curr == self.lbNotes.size() - 1:
+            return
+        temp = self.ddb.Notes[self.curr]
+        self.ddb.Notes[self.curr] = self.ddb.Notes[self.curr + 1]
+        self.ddb.Notes[self.curr + 1] = temp
+        self.refreshNotes()
+        self.curr = self.curr + 1
+        self.lbNotes.select_clear(0, tk.END)
+        self.lbNotes.select_set(self.curr)
+        self.lbNotes.activate(self.curr)
+        self.modified = True
+        self.btnSave['state'] = 'normal'
 
     def popupRename(self):
         pass
