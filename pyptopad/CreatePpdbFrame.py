@@ -117,6 +117,11 @@ class CreatePpdbFrame(tk.Frame):
 
         self.changeSecMode('0')
 
+        self.master.geometry('600x480' + '+' +
+                             str(int(self.master.winfo_screenwidth() / 2) -
+                                     300) + '+' +
+                             str(int(self.master.winfo_screenheight() / 2) -
+                                     240))
         self.pack(padx=10, pady=10, anchor=tk.CENTER, expand=True)
         # When user decides to exit the app, the app brings back LoginFrame
         self.master.protocol('WM_DELETE_WINDOW', self.closeWindow)
