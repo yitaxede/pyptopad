@@ -97,11 +97,11 @@ msgstr "Стандарт"
 
 #: CreatePpdbFrame.py:169
 msgid "Decrypion takes a little bit longer in this mode,"
-msgstr "Расшифрование в этом режиме займёт немного больше времени,"
+msgstr "Расшифрование в этом режиме займёт немного "
 
 #: CreatePpdbFrame.py:170
 msgid "which makes brute-force attacks harder."
-msgstr "что усложнит брутфорс атаки."
+msgstr "больше времени, что усложнит брутфорс атаки."
 
 #: CreatePpdbFrame.py:174
 msgid "Paranoia"

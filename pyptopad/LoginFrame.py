@@ -66,11 +66,6 @@ class LoginFrame(tk.Frame):
         self.btnNew.grid(row=4, column=0, columnspan=2,
                          sticky=tk.W+tk.S, pady=20)
 
-        self.master.geometry('500x250' + '+' +
-                             str(int(self.master.winfo_screenwidth() / 2) -
-                                 250) + '+' +
-                             str(int(self.master.winfo_screenheight() / 2) -
-                                 125))
         self.pack(padx=30, pady=20, expand=True)
         # When user decides to exit the app, the app is really being destroyed
         self.master.protocol('WM_DELETE_WINDOW', self.master.destroy)
