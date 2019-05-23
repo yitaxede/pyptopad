@@ -91,11 +91,6 @@ class PpdbFrame(tk.Frame):
         self.modified = False
         self.btnSave['state'] = 'disabled'
 
-        self.master.geometry('1100x500' + '+' +
-                             str(int(self.master.winfo_screenwidth() / 2) -
-                                 550) + '+' +
-                             str(int(self.master.winfo_screenheight() / 2) -
-                                 250))
         self.pack(padx=10, pady=10, anchor=tk.CENTER, expand=True)
         # When the user decides to exit the app, the app offers the messagebox
         # The user needs to press 'Close' button to return to the LoginFrame
