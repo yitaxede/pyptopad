@@ -1,12 +1,12 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name="pyptopad",
     version="1.0",
     description="Pyptopad: python crypto pad",
     long_description=open("README.md", "rb").read().decode("utf-8"),
+    long_description_content_type='text/markdown',
     author="Pyptopad team",
-    author_email="kirill@disroot.org",
     url="https://github.com/yitaxede/pyptopad",
     license="GPLv3+",
     classifiers=[
@@ -18,9 +18,12 @@ setup(
         "Programming Language :: Python :: 3",
         "Topic :: Security :: Cryptography",
     ],
-    packages=["pyptopad"],
+    packages=find_packages(),
+    py_modules=["pyptopad"],
     data_files=(
         ('', (
+            #"pyptopad/ru/LC_MESSAGES/pyptopad.mo",
+            #"pyptopad/ru.po",
             "README.md",
             "LICENSE",
         )),
@@ -29,5 +32,7 @@ setup(
         "PyNaCl",
         "cryptography",
         "pygost",
-    ]
+    ],
+    setup_require = ["mo_installer"],
+    locale_src = ".",
 )

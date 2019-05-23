@@ -1,5 +1,5 @@
 import tkinter as tk
-import LoginFrame as lf
+import pyptopad.LoginFrame as lf
 
 
 class Window(tk.Tk):

@@ -6,21 +6,21 @@ import sys
 
 import gettext
 
-import PpdbFrame as pf
-import CreatePpdbFrame as cpf
+import pyptopad.PpdbFrame as pf
+import pyptopad.CreatePpdbFrame as cpf
 
 from nacl import exceptions
 
-import cryptor as cr
-import database as db
+import pyptopad.cryptor as cr
+import pyptopad.database as db
 from pygost.gost34112012256 import GOST34112012256
 from pygost.gost3413 import cfb_decrypt
 from pygost.gost3412 import GOST3412Kuznechik
 
 FONT = ('DejaVu Sans Mono Bold', 12)
 
-gettext.install('pyptopad', os.path.dirname(sys.argv[0]))
-
+# gettext.install('pyptopad', os.path.dirname(sys.argv[0]) + 'pyptopad/')
+gettext.install('pyptopad', os.path.join(os.path.dirname(__file__),'locale'))
 
 class LoginFrame(tk.Frame):
     def __init__(self, master):

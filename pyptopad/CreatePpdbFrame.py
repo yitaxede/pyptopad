@@ -3,16 +3,16 @@ import gettext
 import os
 import sys
 
-import LoginFrame as lf
+import pyptopad.LoginFrame as lf
 
-import cryptor as cr
-import database as db
+import pyptopad.cryptor as cr
+import pyptopad.database as db
 
 FONT = ('DejaVu Sans Mono Bold', 12)
 SFONT = (FONT[0], FONT[1] - 2)
 
-gettext.install('pyptopad', os.path.dirname(sys.argv[0]))
-
+# gettext.install('pyptopad', os.path.dirname(sys.argv[0]) + 'pyptopad/')
+gettext.install('pyptopad', os.path.join(os.path.dirname(__file__),'locale'))
 
 class CreatePpdbFrame(tk.Frame):
     def __init__(self, master):
