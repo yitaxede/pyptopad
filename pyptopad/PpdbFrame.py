@@ -59,8 +59,8 @@ class PpdbFrame(tk.Frame):
         self.txtText = tk.Text(frame2, font=FONT, wrap=tk.WORD,
                                yscrollcommand=self.scroll2.set)
         self.txtText.bind('<KeyRelease>', self.textModified)
-        self.txtText.bind("<Control-Key-a>", self.textSelectAll) 
-        self.txtText.bind("<Control-Key-A>", self.textSelectAll) 
+        self.txtText.bind('<Control-Key-a>', self.textSelectAll)
+        self.txtText.bind('<Control-Key-A>', self.textSelectAll)
         self.txtText.pack(side='left', fill='y')
 
         self.scroll2['command'] = self.txtText.yview
@@ -111,7 +111,8 @@ class PpdbFrame(tk.Frame):
         return 'break'
 
     def btnSaveClicked(self):
-        self.saveNote(self.curr)
+        if self.ddb.Notes:
+            self.saveNote(self.curr)
         self.changeState('disabled')
         self.crypt.write(self.ddb.to_xml_string())
         self.modified = False
@@ -183,9 +184,9 @@ class PpdbFrame(tk.Frame):
         self.lbNotes.select_clear(0, tk.END)
         self.lbNotes.select_set(self.lbNotes.nearest(event.y))
         self.lbNotes.activate(self.lbNotes.nearest(event.y))
-        self.popup.focus_set()
         self.changeNote()
         self.popup.post(event.x_root, event.y_root)
+        self.popup.focus_set()
 
     def popupUp(self):
         if self.curr == 0:
@@ -216,13 +217,31 @@ class PpdbFrame(tk.Frame):
         self.btnSave['state'] = 'normal'
 
     def popupRename(self):
-        pass
+        if not self.ddb.Notes:
+            return
+
 
     def popupClone(self):
-        pass
+        if not self.ddb.Notes:
+            return
 
     def popupDelete(self):
-        pass
+        if not self.ddb.Notes:
+            return
+        self.ddb.Notes.pop(self.curr)
+        self.refreshNotes()
+        self.modified = True
+        self.btnSave['state'] = 'normal'
+        self.txtText.delete('1.0', tk.END)
+        if not self.ddb.Notes:
+            self.curr = 0
+            return
+        self.lbNotes.select_clear(0, tk.END)
+        self.lbNotes.select_set(self.curr)
+        self.lbNotes.activate(self.curr)
+        for x in self.ddb.Notes[self.curr].Texts:
+            if x.content:
+                self.txtText.insert('1.0', x.content)
 
     def subFunc1(self):
         self.btnSaveClicked()
