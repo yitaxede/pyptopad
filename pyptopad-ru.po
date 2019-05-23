@@ -1,0 +1,264 @@
+# Russian translations for PACKAGE package
+# Английские переводы для пакета PACKAGE.
+# Copyright (C) 2019 ORGANIZATION
+# Ilya <ilya.babkin1@mail.ru>, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2019-05-23 16:04+MSK\n"
+"PO-Revision-Date: 2019-05-19 19:03+0300\n"
+"Last-Translator: Ilya <ilya.babkin1@mail.ru>\n"
+"Language-Team: Russian\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: CreatePpdbFrame.py:22
+msgid "Location:"
+msgstr "Расположение файла:"
+
+#: CreatePpdbFrame.py:41 LoginFrame.py:48
+msgid "Password:"
+msgstr "Пароль:"
+
+#: CreatePpdbFrame.py:51
+msgid "Repeat password:"
+msgstr "Повторите пароль:"
+
+#: CreatePpdbFrame.py:62
+msgid "Security mode:"
+msgstr "Режим безопасности:"
+
+#: CreatePpdbFrame.py:93
+msgid "Run benchmark to see how long decryption will"
+msgstr "Запустите бенчмарк, чтобы узнать, сколько времени"
+
+#: CreatePpdbFrame.py:95
+msgid "take on your device in each security mode."
+msgstr "займёт расшифрование на вашем устройстве."
+
+#: CreatePpdbFrame.py:103 PpdbFrame.py:144 PpdbFrame.py:174 PpdbFrame.py:243
+#: PpdbFrame.py:273 PpdbFrame.py:343
+msgid "Cancel"
+msgstr "Отмена"
+
+#: CreatePpdbFrame.py:108 CreatePpdbFrame.py:218
+msgid "Run benchmark"
+msgstr "Бенчмарк"
+
+#: CreatePpdbFrame.py:113
+msgid "Create"
+msgstr "Создать"
+
+#: CreatePpdbFrame.py:123
+msgid "Creating Database"
+msgstr "Создание базы данных"
+
+#: CreatePpdbFrame.py:128 LoginFrame.py:74
+msgid "pyptopad database"
+msgstr "база данных pyptopad"
+
+#: CreatePpdbFrame.py:130 LoginFrame.py:76
+msgid "all files"
+msgstr "все файлы"
+
+#: CreatePpdbFrame.py:139
+msgid "Passwords don't match."
+msgstr "Пароли не совпадают."
+
+#: CreatePpdbFrame.py:150
+msgid "Wrong file path."
+msgstr "Неверный путь к файлу."
+
+#: CreatePpdbFrame.py:161
+msgid "Nothing to Hide"
+msgstr "Нечегоскрывать"
+
+#: CreatePpdbFrame.py:162
+msgid "I put perfomance above security."
+msgstr "Для меня скорость важнее безопасности."
+
+#: CreatePpdbFrame.py:163
+msgid "In this mode decryption is quickest,"
+msgstr "В этом режиме расшифрование будет быстрее всего,"
+
+#: CreatePpdbFrame.py:164
+msgid "but you better use a strong password."
+msgstr "но Вам лучше использовать сильный пароль."
+
+#: CreatePpdbFrame.py:168
+msgid "Standard"
+msgstr "Стандарт"
+
+#: CreatePpdbFrame.py:169
+msgid "Decrypion takes a little bit longer in this mode,"
+msgstr "Расшифрование в этом режиме займёт немного больше времени,"
+
+#: CreatePpdbFrame.py:170
+msgid "which makes brute-force attacks harder."
+msgstr "что усложнит брутфорс атаки."
+
+#: CreatePpdbFrame.py:174
+msgid "Paranoia"
+msgstr "Паранойя"
+
+#: CreatePpdbFrame.py:175
+msgid "Just because you're paranoid,"
+msgstr "То, что Вы — параноик,"
+
+#: CreatePpdbFrame.py:176
+msgid "doesn't mean they're not watching you."
+msgstr "не означает, что за Вами не следят."
+
+#: CreatePpdbFrame.py:180
+msgid "On this device decryption is going to take:"
+msgstr "На данном устройстве расшифрование займёт:"
+
+#: CreatePpdbFrame.py:183
+msgid "s with Nothing to Hide Security Mode"
+msgstr "с в режиме Нечегоскрывать"
+
+#: CreatePpdbFrame.py:185
+msgid "s with Standard Security Mode"
+msgstr "с в режиме Стандарт"
+
+#: CreatePpdbFrame.py:187
+msgid "s with Paranoia Security Mode"
+msgstr "с в режиме Паранойя"
+
+#: CreatePpdbFrame.py:207
+msgid "Running..."
+msgstr "В процессе..."
+
+#: LoginFrame.py:30
+msgid "Database:"
+msgstr "База данных:"
+
+#: LoginFrame.py:58
+msgid "Open"
+msgstr "Открыть"
+
+#: LoginFrame.py:63
+msgid "New database"
+msgstr "Новая база данных"
+
+#: LoginFrame.py:99
+msgid "No such file."
+msgstr "Такого файла не существует."
+
+#: LoginFrame.py:110
+msgid "Decryption error"
+msgstr "Ошибка расшифрования"
+
+#: LoginFrame.py:111
+msgid "Wrong password or "
+msgstr "Пароль неверен или "
+
+#: LoginFrame.py:112
+msgid "corrupted database."
+msgstr "база данных повреждена"
+
+#: LoginFrame.py:116
+msgid "Unexpected error. Check console."
+msgstr "Непредвиденная ошибка. Проверьте консоль."
+
+#: PpdbFrame.py:39
+msgid "Up"
+msgstr "Вверх"
+
+#: PpdbFrame.py:40
+msgid "Down"
+msgstr "Вниз"
+
+#: PpdbFrame.py:42 PpdbFrame.py:240
+msgid "Rename"
+msgstr "Переименовать"
+
+#: PpdbFrame.py:43 PpdbFrame.py:270
+msgid "Clone"
+msgstr "Клонировать"
+
+#: PpdbFrame.py:44
+msgid "Delete"
+msgstr "Удалить"
+
+#: PpdbFrame.py:71
+msgid "Close"
+msgstr "Закрыть"
+
+#: PpdbFrame.py:76
+msgid "Save"
+msgstr "Сохранить"
+
+#: PpdbFrame.py:132 PpdbFrame.py:261
+msgid "Enter the title for a new note:"
+msgstr "Введите название для новой заметки:"
+
+#: PpdbFrame.py:141
+msgid "Add"
+msgstr "Добавить"
+
+#: PpdbFrame.py:148
+msgid "New note - "
+msgstr "Новая заметка - "
+
+#: PpdbFrame.py:162 PpdbFrame.py:332
+msgid "Do you want to save changes"
+msgstr "Вы хотите сохранить изменения"
+
+#: PpdbFrame.py:163
+msgid ""
+"before returning to login window?\n"
+"If you"
+msgstr ""
+"перед возвращением в окно входа?\n"
+"Если Вы"
+
+#: PpdbFrame.py:164
+msgid "don't save, changes will be"
+msgstr " не сохраните их, изменения будут"
+
+#: PpdbFrame.py:165
+msgid "permanently lost."
+msgstr "потеряны навсегда."
+
+#: PpdbFrame.py:168 PpdbFrame.py:337
+msgid "Save & Close"
+msgstr "Сохранить и закрыть"
+
+#: PpdbFrame.py:171 PpdbFrame.py:340
+msgid "Close w/o saving"
+msgstr "Выйти без сохранения"
+
+#: PpdbFrame.py:178 PpdbFrame.py:347
+msgid "Save changes? - "
+msgstr "Сохранить изменения? - "
+
+#: PpdbFrame.py:231
+msgid "Enter the new title:"
+msgstr "Введите новое название для заметки:"
+
+#: PpdbFrame.py:247
+msgid "Renaming note - "
+msgstr "Смена названия - "
+
+#: PpdbFrame.py:277
+msgid "Cloning note - "
+msgstr "Клонирование - "
+
+#: PpdbFrame.py:333
+msgid ""
+"before closing?\n"
+"If you don't save, changes"
+msgstr ""
+"перед закрытием?\n"
+"Если вы не сохраните их, изменения"
+
+#: PpdbFrame.py:334
+msgid "will be permanently lost."
+msgstr "будут потеряны навсегда"
