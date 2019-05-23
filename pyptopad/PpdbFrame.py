@@ -36,12 +36,12 @@ class PpdbFrame(tk.Frame):
         self.lbNotes.pack(side='left', fill='y')
 
         self.popup = tk.Menu(self, tearoff=0)
-        self.popup.add_command(label="Up", command=self.popupUp)
-        self.popup.add_command(label="Down", command=self.popupDown)
+        self.popup.add_command(label=_("Up"), command=self.popupUp)
+        self.popup.add_command(label=_("Down"), command=self.popupDown)
         self.popup.add_separator()
-        self.popup.add_command(label="Rename", command=self.popupRename)
-        self.popup.add_command(label="Clone", command=self.popupClone)
-        self.popup.add_command(label="Delete", command=self.popupDelete)
+        self.popup.add_command(label=_("Rename"), command=self.popupRename)
+        self.popup.add_command(label=_("Clone"), command=self.popupClone)
+        self.popup.add_command(label=_("Delete"), command=self.popupDelete)
         self.popup.bind('<FocusOut>', lambda e: self.popup.unpost())
 
         self.scroll1['command'] = self.lbNotes.yview
@@ -98,7 +98,8 @@ class PpdbFrame(tk.Frame):
         self.master.title(file.split('/')[-1] + ' - pyptopad')
 
     def textModified(self, event):
-        if event.state != 0 or event.char == '' or not self.ddb.Notes:
+        if (event.state != 0 and event.state != 0x2000) \
+           or event.char == '' or not self.ddb.Notes:
             return
         self.modified = True
         self.btnSave['state'] = 'normal'
@@ -275,7 +276,6 @@ class PpdbFrame(tk.Frame):
         butt2.grid(row=2, column=1)
         subFrame.pack(padx=10, pady=10, expand=True)
         self.window.title(_("Cloning note - ") + self.master.title())
-
 
     def popupDelete(self):
         if not self.ddb.Notes:

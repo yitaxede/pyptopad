@@ -33,6 +33,7 @@ class LoginFrame(tk.Frame):
 
         # No default path yet
         self.ppdbPath = tk.StringVar()
+        self.ppdbPath.set(os.path.expanduser('~') + '/')
         self.entPpdb = tk.Entry(self, textvariable=self.ppdbPath,
                                 font=FONT, width=30)
         self.entPpdb.bind('<Return>', self.btnOpenClicked)
