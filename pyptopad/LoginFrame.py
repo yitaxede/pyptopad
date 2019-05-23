@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
 import os
-import sys
 
 import gettext
 
@@ -20,7 +19,8 @@ from pygost.gost3412 import GOST3412Kuznechik
 FONT = ('DejaVu Sans Mono Bold', 12)
 
 # gettext.install('pyptopad', os.path.dirname(sys.argv[0]) + 'pyptopad/')
-gettext.install('pyptopad', os.path.join(os.path.dirname(__file__),'locale'))
+gettext.install('pyptopad', os.path.join(os.path.dirname(__file__), 'locale'))
+
 
 class LoginFrame(tk.Frame):
     def __init__(self, master):
@@ -68,9 +68,9 @@ class LoginFrame(tk.Frame):
 
         self.master.geometry('500x250' + '+' +
                              str(int(self.master.winfo_screenwidth() / 2) -
-                                     250) + '+' +
+                                 250) + '+' +
                              str(int(self.master.winfo_screenheight() / 2) -
-                                     125))
+                                 125))
         self.pack(padx=30, pady=20, expand=True)
         # When user decides to exit the app, the app is really being destroyed
         self.master.protocol('WM_DELETE_WINDOW', self.master.destroy)

@@ -12,7 +12,8 @@ setup(
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: End Users/Desktop",
-        "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+        "License :: OSI Approved :: GNU General Public License v3" +
+        " or later (GPLv3+)",
         "Natural Language :: English",
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3",
@@ -22,8 +23,6 @@ setup(
     py_modules=["pyptopad"],
     data_files=(
         ('', (
-            #"pyptopad/ru/LC_MESSAGES/pyptopad.mo",
-            #"pyptopad/ru.po",
             "README.md",
             "LICENSE",
         )),
@@ -33,6 +32,6 @@ setup(
         "cryptography",
         "pygost",
     ],
-    setup_require = ["mo_installer"],
-    locale_src = ".",
+    setup_require=["mo_installer"],
+    locale_src=".",
 )

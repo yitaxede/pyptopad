@@ -2,7 +2,6 @@ import tkinter as tk
 import xml.etree.ElementTree as ET
 import gettext
 import os
-import sys
 
 import pyptopad.LoginFrame as lf
 
@@ -11,7 +10,8 @@ import pyptopad.database as db
 FONT = ('DejaVu Sans Mono Bold', 12)
 
 # gettext.install('pyptopad', os.path.dirname(sys.argv[0]) + 'pyptopad/')
-gettext.install('pyptopad', os.path.join(os.path.dirname(__file__),'locale'))
+gettext.install('pyptopad', os.path.join(os.path.dirname(__file__), 'locale'))
+
 
 class PpdbFrame(tk.Frame):
     def __init__(self, master, file, ddb, crypt):
@@ -93,14 +93,14 @@ class PpdbFrame(tk.Frame):
 
         self.master.geometry('1100x500' + '+' +
                              str(int(self.master.winfo_screenwidth() / 2) -
-                                     550) + '+' +
+                                 550) + '+' +
                              str(int(self.master.winfo_screenheight() / 2) -
-                                     250))
+                                 250))
         self.pack(padx=10, pady=10, anchor=tk.CENTER, expand=True)
         # When the user decides to exit the app, the app offers the messagebox
         # The user needs to press 'Close' button to return to the LoginFrame
         self.master.protocol('WM_DELETE_WINDOW', self.rUSure)
-        self.master.title(file.split('/')[-1] + ' - pyptopad') 
+        self.master.title(file.split('/')[-1] + ' - pyptopad')
 
     def textModified(self, event):
         if (event.state != 0 and event.state != 0x2000) \

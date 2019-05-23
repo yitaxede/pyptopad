@@ -1,7 +1,6 @@
 import tkinter as tk
 import gettext
 import os
-import sys
 
 import pyptopad.LoginFrame as lf
 
@@ -12,7 +11,8 @@ FONT = ('DejaVu Sans Mono Bold', 12)
 SFONT = (FONT[0], FONT[1] - 2)
 
 # gettext.install('pyptopad', os.path.dirname(sys.argv[0]) + 'pyptopad/')
-gettext.install('pyptopad', os.path.join(os.path.dirname(__file__),'locale'))
+gettext.install('pyptopad', os.path.join(os.path.dirname(__file__), 'locale'))
+
 
 class CreatePpdbFrame(tk.Frame):
     def __init__(self, master):
@@ -119,9 +119,9 @@ class CreatePpdbFrame(tk.Frame):
 
         self.master.geometry('600x480' + '+' +
                              str(int(self.master.winfo_screenwidth() / 2) -
-                                     300) + '+' +
+                                 300) + '+' +
                              str(int(self.master.winfo_screenheight() / 2) -
-                                     240))
+                                 240))
         self.pack(padx=10, pady=10, anchor=tk.CENTER, expand=True)
         # When user decides to exit the app, the app brings back LoginFrame
         self.master.protocol('WM_DELETE_WINDOW', self.closeWindow)
