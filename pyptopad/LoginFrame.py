@@ -31,15 +31,15 @@ class LoginFrame(tk.Frame):
                            anchor=tk.W)
         lblPpdb.grid(row=0, column=0, sticky=tk.W+tk.E)
 
-        # No default path yet
         self.ppdbPath = tk.StringVar()
         self.ppdbPath.set(os.path.expanduser('~') + '/')
         self.entPpdb = tk.Entry(self, textvariable=self.ppdbPath,
                                 font=FONT, width=30)
         self.entPpdb.bind('<Return>', self.btnOpenClicked)
         self.entPpdb.grid(row=1, column=0, sticky=tk.W+tk.E+tk.S+tk.N)
-        # Actually usable focus on entry
         self.entPpdb.focus_set()
+        self.entPpdb.icursor(tk.END)
+        self.entPpdb.xview_moveto(1.0)
 
         self.btnPpdb = tk.Button(self, text='...', font=FONT,
                                  command=self.btnPpdbClicked,
@@ -72,9 +72,11 @@ class LoginFrame(tk.Frame):
         self.master.title('pyptopad')
 
     def btnPpdbClicked(self):
-        file = filedialog.askopenfilename(filetypes=((_("pyptopad database"),
-                                                      '*.ppdb'),
-                                                     (_("all files"), '*.*')))
+        file = filedialog.askopenfilename(
+                                        initialdir=os.path.expanduser('~'),
+                                        filetypes=((_("pyptopad database"),
+                                                    '*.ppdb'),
+                                                   (_("all files"), '*.*')))
         # Doesn't allow to leave with empty path
         if file:
             self.ppdbPath.set(file)

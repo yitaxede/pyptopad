@@ -33,7 +33,7 @@ class PpdbFrame(tk.Frame):
         self.refreshNotes()
         self.lbNotes.bind('<<ListboxSelect>>', self.changeNote)
         self.lbNotes.bind('<Button-3>', self.rmbClicked)
-        self.lbNotes.pack(side='left', fill='y')
+        self.lbNotes.pack(side='left', fill='both')
 
         self.popup = tk.Menu(self, tearoff=0)
         self.popup.add_command(label=_("Up"), command=self.popupUp)
