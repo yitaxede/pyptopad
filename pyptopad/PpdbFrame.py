@@ -249,6 +249,32 @@ class PpdbFrame(tk.Frame):
     def popupClone(self):
         if not self.ddb.Notes:
             return
+        self.window = tk.Toplevel(self.master)
+        self.window.geometry('350x100+' +
+                             str(self.master.winfo_x() +
+                                 int(self.master.winfo_width() / 2) - 175) +
+                             '+' +
+                             str(self.master.winfo_y() +
+                                 int(self.master.winfo_height() / 2) - 50))
+        subFrame = tk.Frame(self.window)
+        lblEntry = tk.Label(subFrame,
+                            text=_("Enter the title for a new note:"),
+                            font=FONT, anchor=tk.W)
+        lblEntry.grid(row=0, columnspan=2, sticky=tk.W+tk.E)
+        self.text = tk.StringVar()
+        entry = tk.Entry(subFrame, textvariable=self.text,
+                         font=FONT)
+        entry.bind('<Return>', self.checkClone)
+        entry.grid(row=1, columnspan=2, sticky=tk.W+tk.E)
+        entry.focus_set()
+        butt1 = tk.Button(subFrame, text=_("Clone"), font=FONT,
+                          command=self.checkClone, anchor=tk.E)
+        butt1.grid(row=2, column=0)
+        butt2 = tk.Button(subFrame, text=_("Cancel"), font=FONT,
+                          command=self.window.destroy)
+        butt2.grid(row=2, column=1)
+        subFrame.pack(padx=10, pady=10, expand=True)
+        self.window.title(_("Cloning note - ") + self.master.title())
 
 
     def popupDelete(self):
@@ -355,6 +381,26 @@ class PpdbFrame(tk.Frame):
             self.lbNotes.select_clear(0, tk.END)
             self.lbNotes.select_set(self.curr)
             self.lbNotes.activate(self.curr)
+            self.txtText.focus_set()
+            self.modified = True
+            self.btnSave['state'] = 'normal'
+            self.master.update_idletasks()
+            self.window.destroy()
+
+    def checkClone(self, *args):
+        if self.text.get():
+            newNote = ET.fromstring('<note />')
+            # Proper addition of 'name' attrib
+            newNote.set('name', self.text.get())
+            self.ddb.Notes.append(db.Note(newNote))
+            self.ddb.Notes[-1].Texts.append(db.Text())
+            old = self.ddb.Notes[self.curr].Texts[0].content
+            self.ddb.Notes[-1].Texts[0].content = old
+            self.refreshNotes()
+            self.lbNotes.select_clear(0, tk.END)
+            self.lbNotes.select_set(tk.END)
+            self.lbNotes.activate(tk.END)
+            self.changeNote()
             self.txtText.focus_set()
             self.modified = True
             self.btnSave['state'] = 'normal'
