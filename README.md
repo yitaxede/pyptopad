@@ -14,10 +14,10 @@ No warranty, as is and all this crap. Hey, we are not cryptographers, we are jus
 Bro, if you are looking for an app for organizing a transatlantic cocaine trafficking, pyptopad is probably not your best choice.
 
 ## Installation
-work in progress
+`python3 -m pip install pyptopad-1.0-py3-none-any.whl`
 
 ## Usage
-work in progress
+`python3 -m pyptopad`
 
 ## FAQ
 ### Is pyptopad secure?
